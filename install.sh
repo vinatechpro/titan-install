@@ -60,7 +60,7 @@ titan-edge daemon start --init --url https://test-locator.titannet.io:5000/rpc/v
 daemon_pid=$!
 echo "PID của titan-edge daemon: $daemon_pid"
 
-titan-edge bind --hash="$hash_value" https://api-test1.container1.titannet.io/api/v2/device/binding&
+titan-edge bind --hash=$hash_value https://api-test1.container1.titannet.io/api/v2/device/binding&
 bind_pid=$!
 echo "PID của titan-edge bind: $bind_pid"
 
