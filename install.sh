@@ -98,4 +98,4 @@ sudo systemctl start titand.service
 
 sleep 8
 # Hiển thị thông tin và cấu hình của titan-edge
-sudo systemctl status titand.service && itan-edge config show && titan-edge info
+sudo systemctl status titand.service && titan-edge config show && titan-edge info
