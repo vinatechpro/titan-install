@@ -41,6 +41,42 @@ sudo mv /usr/local/titan_v0.1.16_linux_amd64 /usr/local/titan
 
 rm titan_v0.1.16_linux_amd64.tar.gz
 
+if [ -z "$hash_value" ]; then
+    echo "Không có giá trị hash được nhập. Dừng chương trình."
+    exit 1
+fi
+
+storage_size="72"
+memory_size="4"
+cpu_core="2"
+
+service_content="
+[Unit]
+Description=Titan Node
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+User=root
+ExecStart=/usr/local/titan/titan-edge daemon start
+Restart=always
+RestartSec=15
+
+[Install]
+WantedBy=multi-user.target
+"
+
+sudo apt-get update
+sudo apt-get install -y nano
+
+wget https://github.com/Titannet-dao/titan-node/releases/download/v0.1.16/titan_v0.1.16_linux_amd64.tar.gz
+
+sudo tar -xf titan_v0.1.16_linux_amd64.tar.gz -C /usr/local
+
+sudo mv /usr/local/titan_v0.1.16_linux_amd64 /usr/local/titan
+
+rm titan_v0.1.16_linux_amd64.tar.gz
+
 if ! grep -q '/usr/local/titan' ~/.bash_profile; then
     echo 'export PATH=$PATH:/usr/local/titan' >> ~/.bash_profile
     source ~/.bash_profile
@@ -63,6 +99,8 @@ echo "PID của titan-edge bind: $bind_pid"
 
 # Chờ cho quá trình bind kết thúc
 wait $bind_pid
+
+sleep 10
 
 # Tiến hành các cài đặt khác
 
