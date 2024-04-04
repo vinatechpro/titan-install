@@ -41,28 +41,30 @@ sudo mv /usr/local/titan_v0.1.16_linux_amd64 /usr/local/titan
 
 rm titan_v0.1.16_linux_amd64.tar.gz
 
-touch ~/.bash_profile
+if ! grep -q '/usr/local/titan' ~/.bash_profile; then
+    echo 'export PATH=$PATH:/usr/local/titan' >> ~/.bash_profile
+    source ~/.bash_profile
+fi
 
-
-echo 'export PATH=$PATH:/usr/local/titan' >> ~/.bash_profile
-
-source ~/.bash_profile
-
-
-titan-edge daemon start --init --url https://test-locator.titannet.io:5000/rpc/v0 &
+# Chạy titan-edge daemon trong nền
+(titan-edge daemon start --init --url https://test-locator.titannet.io:5000/rpc/v0 &) &
 daemon_pid=$!
 
 echo "PID của titan-edge daemon: $daemon_pid"
 
-sleep 30
+# Chờ 10 giây để đảm bảo rằng daemon đã khởi động thành công
+sleep 10
 
-titan-edge bind --hash="$hash_value" https://api-test1.container1.titannet.io/api/v2/device/binding &
+# Chạy titan-edge bind trong nền
+(titan-edge bind --hash="$hash_value" https://api-test1.container1.titannet.io/api/v2/device/binding &) &
 bind_pid=$!
 
 echo "PID của titan-edge bind: $bind_pid"
 
+# Chờ cho quá trình bind kết thúc
 wait $bind_pid
 
+# Tiến hành các cài đặt khác
 
 config_file="/root/.titanedge/config.toml"
 if [ -f "$config_file" ]; then
@@ -78,12 +80,15 @@ fi
 
 echo "$service_content" | sudo tee /etc/systemd/system/titand.service > /dev/null
 
+# Dừng titan-edge daemon
 kill $daemon_pid
 
+# Cập nhật systemd
 sudo systemctl daemon-reload
 
+# Kích hoạt và khởi động titand.service
 sudo systemctl enable titand.service
-
 sudo systemctl start titand.service
 
+# Hiển thị thông tin và cấu hình của titan-edge
 titan-edge info && titan-edge config show
