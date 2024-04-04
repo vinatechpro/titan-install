@@ -41,43 +41,11 @@ sudo mv /usr/local/titan_v0.1.16_linux_amd64 /usr/local/titan
 
 rm titan_v0.1.16_linux_amd64.tar.gz
 
-if [ -z "$hash_value" ]; then
-    echo "Không có giá trị hash được nhập. Dừng chương trình."
-    exit 1
-fi
 
-storage_size="72"
-memory_size="4"
-cpu_core="2"
-
-service_content="
-[Unit]
-Description=Titan Node
-After=network.target
-StartLimitIntervalSec=0
-
-[Service]
-User=root
-ExecStart=/usr/local/titan/titan-edge daemon start
-Restart=always
-RestartSec=15
-
-[Install]
-WantedBy=multi-user.target
-"
-
-sudo apt-get update
-sudo apt-get install -y nano
-
-wget https://github.com/Titannet-dao/titan-node/releases/download/v0.1.16/titan_v0.1.16_linux_amd64.tar.gz
-
-sudo tar -xf titan_v0.1.16_linux_amd64.tar.gz -C /usr/local
-
-sudo mv /usr/local/titan_v0.1.16_linux_amd64 /usr/local/titan
-
-rm titan_v0.1.16_linux_amd64.tar.gz
-
-if ! grep -q '/usr/local/titan' ~/.bash_profile; then
+if [ ! -f ~/.bash_profile ]; then
+    echo 'export PATH=$PATH:/usr/local/titan' >> ~/.bash_profile
+    source ~/.bash_profile
+elif ! grep -q '/usr/local/titan' ~/.bash_profile; then
     echo 'export PATH=$PATH:/usr/local/titan' >> ~/.bash_profile
     source ~/.bash_profile
 fi
@@ -89,7 +57,7 @@ daemon_pid=$!
 echo "PID của titan-edge daemon: $daemon_pid"
 
 # Chờ 10 giây để đảm bảo rằng daemon đã khởi động thành công
-sleep 10
+sleep 15
 
 # Chạy titan-edge bind trong nền
 (titan-edge bind --hash="$hash_value" https://api-test1.container1.titannet.io/api/v2/device/binding &) &
@@ -100,7 +68,7 @@ echo "PID của titan-edge bind: $bind_pid"
 # Chờ cho quá trình bind kết thúc
 wait $bind_pid
 
-sleep 10
+sleep 15
 
 # Tiến hành các cài đặt khác
 
@@ -118,8 +86,8 @@ fi
 
 echo "$service_content" | sudo tee /etc/systemd/system/titand.service > /dev/null
 
-# Dừng titan-edge daemon
-kill $daemon_pid
+# Dừng các tiến trình liên quan đến titan-edge
+pkill titan-edge
 
 # Cập nhật systemd
 sudo systemctl daemon-reload
@@ -128,5 +96,6 @@ sudo systemctl daemon-reload
 sudo systemctl enable titand.service
 sudo systemctl start titand.service
 
+sleep 8
 # Hiển thị thông tin và cấu hình của titan-edge
-titan-edge info && titan-edge config show
+sudo systemctl status titand.service && itan-edge config show && titan-edge info
