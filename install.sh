@@ -10,7 +10,7 @@ if [ -z "$hash_value" ]; then
     exit 1
 fi
 
-storage_size="96"
+storage_size="72"
 memory_size="2"
 cpu_core="1"
 
