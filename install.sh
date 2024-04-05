@@ -10,9 +10,9 @@ if [ -z "$hash_value" ]; then
     exit 1
 fi
 
-storage_size="72"
-memory_size="4"
-cpu_core="2"
+storage_size="96"
+memory_size="2"
+cpu_core="1"
 
 service_content="
 [Unit]
