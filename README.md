@@ -1,4 +1,4 @@
-*Bash shell cài tự động tỉan-edge L2 Huygens testnet
+Bash shell cài tự động titan-edge L2 Huygens testnet
 - Lệnh cài đặt:
 ```
 curl -O https://raw.githubusercontent.com/vinatechpro/titan-install/main/install.sh && chmod u+x install.sh && ./install.sh
