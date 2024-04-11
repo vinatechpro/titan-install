@@ -18,6 +18,10 @@ nano /root/.titanedge/config.toml
 ```
 systemctl restart titand.service && titan-edge config show && titan-edge info
 ```
+- Cài đặt cho Azure `2vCPU|6Gb RAM|240Gb Storage`
+```
+sudo -i && curl -O https://raw.githubusercontent.com/vinatechpro/titan-install/main/az-install.sh && chmod u+x az-install.sh && ./az-install.sh
+```
 ------------
 - Link đăng ký Dashboard: https://test1.titannet.io/intiveRegister?code=CtKlIe
 - Nhóm Telegram: https://t.me/RetroHubVN
