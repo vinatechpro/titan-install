@@ -1,5 +1,12 @@
 #!/bin/bash
+echo "--------------------------- Cấu hình máy chủ ---------------------------"
+echo "Số lõi CPU: " $(nproc --all) "CORE"
+echo -n "Dung lượng RAM: " && free -h | awk '/Mem/ {sub(/Gi/, " GB", $2); print $2}'
+echo "Dung lượng ổ cứng:" $(df -B 1G --total | awk '/total/ {print $2}' | tail -n 1) "GB"
+echo "------------------------------------------------------------------------"
 
+
+echo "--------------------------- BASH SHELL TITAN ---------------------------"
 # Lấy giá trị hash từ terminal
 echo "Nhap ma Hash cua ban (Identity code): "
 read hash_value
@@ -10,9 +17,16 @@ if [ -z "$hash_value" ]; then
     exit 1
 fi
 
-storage_size="72"
-memory_size="2"
-cpu_core="1"
+
+read -p "Nhập số core CPU (mặc định là 1 CORE): " cpu_core
+cpu_core=${cpu_core:-1}
+
+read -p "Nhập dung lượng RAM (mặc định là 2 GB): " memory_size
+memory_size=${memory_size:-2}
+
+read -p "Nhập dung lượng lưu trữ (mặc định là 72 GB): " storage_size
+storage_size=${storage_size:-72}
+
 
 service_content="
 [Unit]
@@ -79,7 +93,7 @@ if [ -f "$config_file" ]; then
     sed -i "s/#MemoryGB = 1/MemoryGB = $memory_size/" "$config_file"
     echo "Đã thay đổi kích thước memory liệu thành $memory_size GB."
     sed -i "s/#Cores = 1/Cores = $cpu_core/" "$config_file"
-    echo "Đã thay đổi core cpu liệu thành $cpu_core GB."
+    echo "Đã thay đổi core cpu liệu thành $cpu_core Core."
 else
     echo "Lỗi: Tệp cấu hình $config_file không tồn tại."
 fi
