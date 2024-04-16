@@ -21,14 +21,14 @@
 - Khởi tạo titan-node:
 
   ```
-    ./titan-edge daemon start --init --url https://test-locator.titannet.io:5000/rpc/v0
+  ./titan-edge daemon start --init --url https://test-locator.titannet.io:5000/rpc/v0
   ```
 
 - Giữ nguyên cửa sổ `terminal (1)` và mở thêm 1 `terminal (2)` tương tự chạy lệnh bên dưới
   > Chú ý: trong lệnh có từ khóa `your-hash-here` bạn cần thay thế thành mã hash lấy trong Dashboard của bạn.
 
   ```
-    ./titan-edge bind --hash=your-hash-here https://api-test1.container1.titannet.io/api/v2/device/binding
+  ./titan-edge bind --hash=your-hash-here https://api-test1.container1.titannet.io/api/v2/device/binding
   ```
   ![3](https://github.com/vinatechpro/titan-install/assets/149946061/be95ec0d-7411-4c17-8503-3c8e950c9558)
 
@@ -41,8 +41,9 @@
   - Tại cửa sổ `terminal (1)` bạn nhấn đồng thời phím `Ctrl + C` để dừng chương trình và chạy lệnh dưới để khởi động lại.
 
     ```
-      ./titan-edge daemon start
+    ./titan-edge daemon start
     ```
+  
   > Đây là lệnh chính để chạy titan node, nếu chương trình bị dừng hoặc lần sau bạn muốn khởi động thì mở terminal `cd` tới thư mục `titan` và chạy lệnh `start` trên là được.
 
   ![image](https://github.com/vinatechpro/titan-install/assets/149946061/3bf7bac7-98fe-4ec5-a30d-68d4d55a05e2)
