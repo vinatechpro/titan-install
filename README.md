@@ -9,4 +9,4 @@ titan-edge config show && titan-edge info
 ```
 ------------
 - Link đăng ký Dashboard: https://test1.titannet.io/intiveRegister?code=CtKlIe
-- Nhóm Telegram: https://t.me/RetroHubVN
+- Nhóm Telegram: https://t.me/HGCdotGG
