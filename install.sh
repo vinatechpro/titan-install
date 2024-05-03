@@ -27,7 +27,6 @@ memory_size=${memory_size:-2}
 read -p "Nhập dung lượng lưu trữ (mặc định là 72 GB): " storage_size
 storage_size=${storage_size:-72}
 
-
 service_content="
 [Unit]
 Description=Titan Node
