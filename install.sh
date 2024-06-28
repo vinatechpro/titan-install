@@ -51,17 +51,25 @@ wget https://github.com/Titannet-dao/titan-node/releases/download/v0.1.19/titan-
 sudo tar -xf titan-edge_v0.1.19_linux_amd64.tar.gz -C /usr/local
 
 sudo mv /usr/local/titan-edge_v0.1.19_linux_amd64 /usr/local/titan
+sudo cp /usr/local/titan/libgoworkerd.so /usr/lib/libgoworkerd.so
 
 rm titan-edge_v0.1.19_linux_amd64.tar.gz
 
+# Định nghĩa nội dung cần thêm
+content="
+export PATH=\$PATH:/usr/local/titan
+export LD_LIBRARY_PATH=\$LD_LIZBRARY_PATH:./libgoworkerd.so
+"
 
+# Kiểm tra nếu file ~/.bash_profile chưa tồn tại thì tạo mới, nếu đã tồn tại thì ghi thêm
 if [ ! -f ~/.bash_profile ]; then
-    printf 'export PATH=$PATH:/usr/local/titan\nexport LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/titan\n' >> ~/.bash_profile
-    source ~/.bash_profile
-elif ! grep -q '/usr/local/titan' ~/.bash_profile; then
-    printf 'export PATH=$PATH:/usr/local/titan\nexport LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/titan\n' >> ~/.bash_profile
-    source ~/.bash_profile
+  echo "$content" > ~/.bash_profile
+else
+  echo "$content" >> ~/.bash_profile
 fi
+
+echo "Export PATH ~/.bash_profile"
+
 
 # Chạy titan-edge daemon trong nền
 (titan-edge daemon start --init --url https://cassini-locator.titannet.io:5000/rpc/v0 &) &
