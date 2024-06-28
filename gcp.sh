@@ -42,13 +42,13 @@ WantedBy=multi-user.target
 sudo apt-get update
 sudo apt-get install -y nano
 
-wget https://github.com/Titannet-dao/titan-node/releases/download/v0.1.19/titan_v0.1.19_linux_amd64.tar.gz
+wget https://github.com/Titannet-dao/titan-node/releases/download/v0.1.19/titan-edge_v0.1.19_linux_amd64.tar.gz
 
-sudo tar -xf titan_v0.1.19_linux_amd64.tar.gz -C /usr/local
+sudo tar -xf titan-edge_v0.1.19_linux_amd64.tar.gz -C /usr/local
 
-sudo mv /usr/local/titan_v0.1.19_linux_amd64 /usr/local/titan
+sudo mv /usr/local/titan-edge_v0.1.19_linux_amd64 /usr/local/titan
 
-rm titan_v0.1.19_linux_amd64.tar.gz
+rm titan-edge_v0.1.19_linux_amd64.tar.gz
 
 
 if [ ! -f ~/.bash_profile ]; then
