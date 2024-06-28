@@ -9,16 +9,16 @@ echo "..."
 
 echo "Download Titan node $VERSION"
 # Tải xuống tệp cài đặt Titan
-wget https://github.com/Titannet-dao/titan-node/releases/download/$VERSION/titan_${VERSION}_linux_amd64.tar.gz
+wget https://github.com/Titannet-dao/titan-node/releases/download/$VERSION/titan-edge_${VERSION}_linux_amd64.tar.gz
 
 # Giải nén tệp cài đặt
-sudo tar -xf titan_${VERSION}_linux_amd64.tar.gz -C /usr/local
+sudo tar -xf titan-edge_${VERSION}_linux_amd64.tar.gz -C /usr/local
 
 # Di chuyển thư mục giải nén đến vị trí cài đặt
-sudo mv /usr/local/titan_${VERSION}_linux_amd64 /usr/local/titan
+sudo mv /usr/local/titan-edge_${VERSION}_linux_amd64 /usr/local/titan
 
 # Xóa tệp cài đặt đã giải nén
-rm titan_${VERSION}_linux_amd64.tar.gz
+rm titan-edge_${VERSION}_linux_amd64.tar.gz
 
 echo "Restart titand.service"
 sudo systemctl restart titand.service
