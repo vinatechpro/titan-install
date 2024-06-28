@@ -1,13 +1,13 @@
 #!/bin/bash
-VERSION='v0.1.18'
-echo "Cập nhật Titan node $VERSION"
+VERSION='v0.1.19'
+echo "Update Titan node $VERSION"
 echo "..."
 
-echo "Tạm dừng titand.service & xóa phiên bản cũ"
+echo "Stop titand.service & remove old version"
 systemctl stop titand.service && rm -rf /usr/local/titan
 echo "..."
 
-echo "Tải về Titan node $VERSION"
+echo "Download Titan node $VERSION"
 # Tải xuống tệp cài đặt Titan
 wget https://github.com/Titannet-dao/titan-node/releases/download/$VERSION/titan_${VERSION}_linux_amd64.tar.gz
 
@@ -20,7 +20,7 @@ sudo mv /usr/local/titan_${VERSION}_linux_amd64 /usr/local/titan
 # Xóa tệp cài đặt đã giải nén
 rm titan_${VERSION}_linux_amd64.tar.gz
 
-echo "Khởi động lại titand.service"
+echo "Restart titand.service"
 sudo systemctl restart titand.service
 
 sleep 8
