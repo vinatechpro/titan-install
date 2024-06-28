@@ -1,16 +1,17 @@
-Bash shell cài tự động titan-edge L2 Huygens & Herschel testnet (v0.1.18)
-- Lệnh cài đặt:
+Bash shell auto install Titan node L2 - Cassini Testnet (version v0.1.19)
+- Install:
 ```
 curl -O https://raw.githubusercontent.com/vinatechpro/titan-install/main/install.sh && chmod u+x install.sh && ./install.sh
 ```
-- Lệnh kiểm tra thông tin node
+- Show Info & Config node
 ```
 titan-edge config show && titan-edge info
 ```
-- Trong trường hợp lỗi, xóa `.titanedge` rồi cài đặt lại
+- If errors, delete folder `.titanedge` and reinstall
 ```
 systemctl stop titand.service && rm -rf /root/.titanedge && rm -rf /usr/local/titan
 ```
 ------------
-- Link đăng ký Dashboard: https://test1.titannet.io/intiveRegister?code=CtKlIe
-- Nhóm Telegram: https://t.me/HGCdotGG
+- Ref Titan Dashboard: https://test1.titannet.io/intiveRegister?code=CtKlIe
+- Telegram Offical: https://t.me/titannet_dao
+- Hidden Gems Community (HGC): https://t.me/HGCdotGG
