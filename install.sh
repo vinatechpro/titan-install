@@ -56,15 +56,15 @@ rm titan-edge_v0.1.19_linux_amd64.tar.gz
 
 
 if [ ! -f ~/.bash_profile ]; then
-    echo 'export PATH=$PATH:/usr/local/titan' >> ~/.bash_profile
+    echo 'export PATH=$PATH:/usr/local/titan \n export LD_LIBRARY_PATH=/usr/local/titan/libgoworkerd.so' >> ~/.bash_profile
     source ~/.bash_profile
 elif ! grep -q '/usr/local/titan' ~/.bash_profile; then
-    echo 'export PATH=$PATH:/usr/local/titan' >> ~/.bash_profile
+    echo 'export PATH=$PATH:/usr/local/titan \n export LD_LIBRARY_PATH=/usr/local/titan/libgoworkerd.so' >> ~/.bash_profile
     source ~/.bash_profile
 fi
 
 # Chạy titan-edge daemon trong nền
-(titan-edge daemon start --init --url https://test-locator.titannet.io:5000/rpc/v0 &) &
+(titan-edge daemon start --init --url https://cassini-locator.titannet.io:5000/rpc/v0 &) &
 daemon_pid=$!
 
 echo "PID of titan-edge daemon: $daemon_pid"
