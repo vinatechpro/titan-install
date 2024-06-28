@@ -56,10 +56,10 @@ rm titan-edge_v0.1.19_linux_amd64.tar.gz
 
 
 if [ ! -f ~/.bash_profile ]; then
-    echo 'export PATH=$PATH:/usr/local/titan \n export LD_LIBRARY_PATH=$LD_LIZBRARY_PATH:/usr/local/titan/libgoworkerd.so' >> ~/.bash_profile
+    printf 'export PATH=$PATH:/usr/local/titan\nexport LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/titan\n' >> ~/.bash_profile
     source ~/.bash_profile
 elif ! grep -q '/usr/local/titan' ~/.bash_profile; then
-    echo 'export PATH=$PATH:/usr/local/titan \n export LD_LIBRARY_PATH=$LD_LIZBRARY_PATH:/usr/local/titan/libgoworkerd.so' >> ~/.bash_profile
+    printf 'export PATH=$PATH:/usr/local/titan\nexport LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/titan\n' >> ~/.bash_profile
     source ~/.bash_profile
 fi
 
