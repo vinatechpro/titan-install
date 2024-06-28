@@ -1,5 +1,5 @@
-Bash shell auto install Titan node L2 - Cassini Testnet (version v0.1.19)
-- Install:
+Bash shell auto install Titan node L2 - Cassini Testnet
+- Install (version v0.1.19)
 ```
 curl -O https://raw.githubusercontent.com/vinatechpro/titan-install/main/install.sh && chmod u+x install.sh && ./install.sh
 ```
