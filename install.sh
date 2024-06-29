@@ -46,14 +46,14 @@ WantedBy=multi-user.target
 sudo apt-get update
 sudo apt-get install -y nano
 
-wget https://github.com/Titannet-dao/titan-node/releases/download/v0.1.19/titan-edge_v0.1.19_linux_amd64.tar.gz
+wget https://github.com/Titannet-dao/titan-node/releases/download/v0.1.19/titan-l2edge_v0.1.19_patch_linux_amd64.tar.gz
 
-sudo tar -xf titan-edge_v0.1.19_linux_amd64.tar.gz -C /usr/local
+sudo tar -xf titan-l2edge_v0.1.19_patch_linux_amd64.tar.gz -C /usr/local
 
-sudo mv /usr/local/titan-edge_v0.1.19_linux_amd64 /usr/local/titan
+sudo mv /usr/local/titan-l2edge_v0.1.19_patch_linux_amd64 /usr/local/titan
 sudo cp /usr/local/titan/libgoworkerd.so /usr/lib/libgoworkerd.so
 
-rm titan-edge_v0.1.19_linux_amd64.tar.gz
+rm titan-l2edge_v0.1.19_patch_linux_amd64.tar.gz
 
 # Định nghĩa nội dung cần thêm
 content="
@@ -64,8 +64,10 @@ export LD_LIBRARY_PATH=\$LD_LIZBRARY_PATH:./libgoworkerd.so
 # Kiểm tra nếu file ~/.bash_profile chưa tồn tại thì tạo mới, nếu đã tồn tại thì ghi thêm
 if [ ! -f ~/.bash_profile ]; then
   echo "$content" > ~/.bash_profile
+  source ~/.bash_profile
 else
   echo "$content" >> ~/.bash_profile
+  source ~/.bash_profile
 fi
 
 echo "Export PATH ~/.bash_profile"
