@@ -46,14 +46,17 @@ WantedBy=multi-user.target
 sudo apt-get update
 sudo apt-get install -y nano
 
-wget https://github.com/Titannet-dao/titan-node/releases/download/v0.1.19/titan-l2edge_v0.1.19_patch_linux_amd64.tar.gz
+VERSION='v0.1.19'
+PATCH="89e53b6"
 
-sudo tar -xf titan-l2edge_v0.1.19_patch_linux_amd64.tar.gz -C /usr/local
+wget https://github.com/Titannet-dao/titan-node/releases/download/${VERSION}/titan-l2edge_${VERSION}_patch_linux_amd64.tar.gz
 
-sudo mv /usr/local/titan-l2edge_v0.1.19_patch_linux_amd64 /usr/local/titan
+sudo tar -xf titan-l2edge_${VERSION}_patch_linux_amd64.tar.gz -C /usr/local
+
+sudo mv /usr/local/titan-edge_${VERSION}_${PATCH}_linux_amd64 /usr/local/titan
 sudo cp /usr/local/titan/libgoworkerd.so /usr/lib/libgoworkerd.so
 
-rm titan-l2edge_v0.1.19_patch_linux_amd64.tar.gz
+rm titan-l2edge_${VERSION}_patch_linux_amd64.tar.gz
 
 # Định nghĩa nội dung cần thêm
 content="
