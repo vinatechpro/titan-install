@@ -14,7 +14,7 @@ wget https://github.com/Titannet-dao/titan-node/releases/download/${VERSION}/tit
 
 sudo tar -xf titan-l2edge_${VERSION}_patch_linux_amd64.tar.gz -C /usr/local
 
-sudo mv /usr/local/titan-l2edge_${VERSION}_${PATCH}_linux_amd64 /usr/local/titan
+sudo mv /usr/local/titan-edge_${VERSION}_${PATCH}_linux_amd64 /usr/local/titan
 sudo cp /usr/local/titan/libgoworkerd.so /usr/lib/libgoworkerd.so
 
 rm titan-l2edge_${VERSION}_patch_linux_amd64.tar.gz
