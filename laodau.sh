@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Check if the script is run as root
+# Check if the script is run as root user
 if [ "$(id -u)" != "0" ]; then
-    echo "This script must be run as root."
-    echo "Please try switching to the root user using the 'sudo -i' command and then run this script again."
+    echo "This script needs to be run with root user privileges."
+    echo "Please try switching to root user using the 'sudo -i' command, and then run this script again."
     exit 1
 fi
 
@@ -12,7 +12,7 @@ function install_nodejs_and_npm() {
     if command -v node > /dev/null 2>&1; then
         echo "Node.js is already installed"
     else
-        echo "Node.js is not installed, installing now..."
+        echo "Node.js is not installed, installing..."
         curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
         sudo apt-get install -y nodejs
     fi
@@ -20,7 +20,7 @@ function install_nodejs_and_npm() {
     if command -v npm > /dev/null 2>&1; then
         echo "npm is already installed"
     else
-        echo "npm is not installed, installing now..."
+        echo "npm is not installed, installing..."
         sudo apt-get install -y npm
     fi
 }
@@ -30,12 +30,12 @@ function install_pm2() {
     if command -v pm2 > /dev/null 2>&1; then
         echo "PM2 is already installed"
     else
-        echo "PM2 is not installed, installing now..."
+        echo "PM2 is not installed, installing..."
         npm install pm2@latest -g
     fi
 }
 
-# Auto set alias function
+# Function to automatically set aliases
 function check_and_set_alias() {
     local alias_name="art"
     local shell_rc="$HOME/.bashrc"
@@ -47,16 +47,16 @@ function check_and_set_alias() {
         shell_rc="$HOME/.bashrc"
     fi
 
-    # Check if alias is already set
+    # Check if the alias is already set
     if ! grep -q "$alias_name" "$shell_rc"; then
-        echo "Setting alias '$alias_name' to $shell_rc"
+        echo "Setting alias '$alias_name' in $shell_rc"
         echo "alias $alias_name='bash $SCRIPT_PATH'" >> "$shell_rc"
-        # Add reminder for the user to activate the alias
-        echo "Alias '$alias_name' is set. Please run 'source $shell_rc' to activate the alias, or reopen the terminal."
+        # Add a reminder to the user to activate the alias
+        echo "Alias '$alias_name' has been set. Please run 'source $shell_rc' to activate the alias, or reopen the terminal."
     else
-        # If alias is already set, provide a reminder
+        # If the alias is already set, provide a reminder
         echo "Alias '$alias_name' is already set in $shell_rc."
-        echo "If the alias does not work, please try running 'source $shell_rc' or reopen the terminal."
+        echo "If the alias does not work, try running 'source $shell_rc' or reopen the terminal."
     fi
 }
 
@@ -66,7 +66,6 @@ function install_node() {
     install_pm2
 
     # Set variables
-
 
     # Update and install necessary software
     sudo apt update && sudo apt upgrade -y
@@ -87,11 +86,11 @@ function install_node() {
     cp titand /usr/local/bin
 
     # Configure titand
-    export MONIKER="titan-hunter"
+    export MONIKER="My_Node"
     titand init $MONIKER --chain-id titan-test-1
     titand config node tcp://localhost:53457
 
-    # Get genesis file and address book
+    # Get initial files and address book
     wget https://raw.githubusercontent.com/nezha90/titan/main/genesis/genesis.json
     mv genesis.json ~/.titan/config/genesis.json
 
@@ -125,23 +124,24 @@ function install_node() {
     curl https://snapshots.dadunode.com/titan/titan_latest_tar.lz4 | lz4 -dc - | tar -xf - -C $HOME/.titan/data
     mv $HOME/.titan/priv_validator_state.json.backup $HOME/.titan/data/priv_validator_state.json
 
-    # Start node process using PM2
+    # Start the node process with PM2
     pm2 restart artelad
 
-    echo '====================== Installation completed. Please run source $HOME/.bash_profile to load environment variables ==========================='
+    echo '====================== Installation complete, please run source $HOME/.bash_profile after exiting the script to load environment variables ==========================='
+    
 }
 
-# Check titan service status
+# Check the status of the titan service
 function check_service_status() {
     pm2 list
 }
 
-# Titan node log query
+# Query titan node logs
 function view_logs() {
     pm2 logs titand
 }
 
-# Uninstall node function
+# Node uninstallation function
 function uninstall_node() {
     echo "Are you sure you want to uninstall the titan node program? This will delete all related data. [Y/N]"
     read -r -p "Please confirm: " response
@@ -171,7 +171,7 @@ function import_wallet() {
 
 # Check balance
 function check_balances() {
-    read -p "Please enter the wallet address: " wallet_address
+    read -p "Please enter wallet address: " wallet_address
     titand query bank balances "$wallet_address"
 }
 
@@ -181,53 +181,84 @@ function check_sync_status() {
 }
 
 # Create validator
-function create_validator() {
-    read -p "Please enter your wallet address: " wallet_address
-    read -p "Please enter your validator name: " moniker
-    read -p "Please enter the amount of staking (unit: TTNT): " amount
-    read -p "Please enter the commission rate (unit: %, e.g., 10): " rate
-
+function add_validator() {
+    read -p "Please enter your wallet name: " wallet_name
+    read -p "Please enter the name you want to set for the validator: " validator_name
+    
     titand tx staking create-validator \
-        --amount "${amount}uttnt" \
-        --from "$wallet_address" \
-        --commission-max-change-rate "0.01" \
-        --commission-max-rate "0.2" \
-        --commission-rate "0.${rate}" \
-        --min-self-delegation "1" \
-        --pubkey  "$(titand tendermint show-validator)" \
-        --moniker "$moniker" \
-        --chain-id titan-1
+    --amount="1000000uttnt" \
+    --pubkey=$(titand tendermint show-validator) \
+    --moniker="$validator_name" \
+    --commission-max-change-rate=0.01 \
+    --commission-max-rate=1.0 \
+    --commission-rate=0.07 \
+    --min-self-delegation=1 \
+    --fees 500uttnt \
+    --from="$wallet_name" 
 }
 
-# Start program
-function main() {
-    echo "========================== Node Installation Menu =========================="
-    echo "1. Install Nodejs"
-    echo "2. View node logs"
-    echo "3. Uninstall Nodejs"
-    echo "4. Check node sync status"
-    echo "5. Check service status"
-    echo "6. Add wallet"
-    echo "7. Import wallet"
-    echo "8. Check wallet balance"
-    echo "9. Create validator"
-    echo "0. Exit script"
-    echo "=========================================================================="
-    read -p "Please select an option [0-9]: " choice
+# Delegate to own validator
+function delegate_self_validator() {
+    read -p "Please enter the amount of tokens to delegate: " math
+    read -p "Please enter wallet name: " wallet_name
+    titand tx staking delegate $(titand keys show $wallet_name --bech val -a)  ${math}art --from $wallet_name --fees 500uttnt
+}
 
-    case "$choice" in
+# Export validator key
+function export_priv_validator_key() {
+    echo "==================== Please backup all the content below to your own notepad or Excel sheet ==========================================="
+    cat ~/.titan/config/priv_validator_key.json
+}
+
+function update_script() {
+    SCRIPT_URL="https://raw.githubusercontent.com/vinatechpro/titan-install/main/laodau.sh"
+    curl -o $SCRIPT_PATH $SCRIPT_URL
+    chmod +x $SCRIPT_PATH
+    echo "The script has been updated. Please exit the script, and run bash titan.sh to rerun this script."
+}
+
+# Main menu
+function main_menu() {
+    while true; do
+        clear
+        echo "============================ Titan Validator Installation ===================================="
+        echo "To exit the script, press ctrl c on your keyboard to exit"
+        echo "Please choose an operation to execute:"
+        echo "1. Install Nodejs"
+        echo "2. Create wallet"
+        echo "3. Import wallet"
+        echo "4. Check wallet address balance"
+        echo "5. Check node Validator sync status"
+        echo "6. Check current service status"
+        echo "7. Query run logs"
+        echo "8. Uninstall Nodejs"
+        echo "9. Set alias"  
+        echo "10. Create validator"  
+        echo "11. Delegate to own validator" 
+        echo "12. Backup validator private key" 
+        echo "13. Update this script" 
+        read -p "Please enter an option (1-13): " OPTION
+
+        case $OPTION in
         1) install_node ;;
-        2) view_logs ;;
-        3) uninstall_node ;;
-        4) check_sync_status ;;
-        5) check_service_status ;;
-        6) add_wallet ;;
-        7) import_wallet ;;
-        8) check_balances ;;
-        9) create_validator ;;
-        0) exit 0 ;;
-        *) echo "Invalid option, please try again." ;;
-    esac
+        2) add_wallet ;;
+        3) import_wallet ;;
+        4) check_balances ;;
+        5) check_sync_status ;;
+        6) check_service_status ;;
+        7) view_logs ;;
+        8) uninstall_node ;;
+        9) check_and_set_alias ;;
+        10) add_validator ;;
+        11) delegate_self_validator ;;
+        12) export_priv_validator_key ;;
+        13) update_script ;;
+        *) echo "Invalid option." ;;
+        esac
+        echo "Press any key to return to the main menu..."
+        read -n 1
+    done
 }
 
-main
+# Show main menu
+main_menu
