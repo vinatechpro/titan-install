@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Check if the script is run as root user
+# Check if the script is run as the root user
 if [ "$(id -u)" != "0" ]; then
-    echo "This script needs to be run with root user privileges."
-    echo "Please try switching to root user using the 'sudo -i' command, and then run this script again."
+    echo "This script needs to be run with root user permissions."
+    echo "Please try switching to the root user using the 'sudo -i' command and then run this script again."
     exit 1
 fi
 
@@ -49,14 +49,14 @@ function check_and_set_alias() {
 
     # Check if the alias is already set
     if ! grep -q "$alias_name" "$shell_rc"; then
-        echo "Setting alias '$alias_name' in $shell_rc"
+        echo "Setting alias '$alias_name' to $shell_rc"
         echo "alias $alias_name='bash $SCRIPT_PATH'" >> "$shell_rc"
-        # Add a reminder to the user to activate the alias
-        echo "Alias '$alias_name' has been set. Please run 'source $shell_rc' to activate the alias, or reopen the terminal."
+        # Add a message to remind the user to activate the alias
+        echo "Alias '$alias_name' is set. Please run 'source $shell_rc' to activate the alias, or reopen the terminal."
     else
-        # If the alias is already set, provide a reminder
+        # If the alias is already set, provide a message
         echo "Alias '$alias_name' is already set in $shell_rc."
-        echo "If the alias does not work, try running 'source $shell_rc' or reopen the terminal."
+        echo "If the alias does not work, please try running 'source $shell_rc' or reopen the terminal."
     fi
 }
 
@@ -66,6 +66,7 @@ function install_node() {
     install_pm2
 
     # Set variables
+
 
     # Update and install necessary software
     sudo apt update && sudo apt upgrade -y
@@ -86,7 +87,7 @@ function install_node() {
     cp titand /usr/local/bin
 
     # Configure titand
-    export MONIKER="My_Node"
+    export MONIKER="TitanNo1"
     titand init $MONIKER --chain-id titan-test-1
     titand config node tcp://localhost:53457
 
@@ -94,7 +95,7 @@ function install_node() {
     wget https://raw.githubusercontent.com/nezha90/titan/main/genesis/genesis.json
     mv genesis.json ~/.titan/config/genesis.json
 
-    # Configure the node
+    # Configure node
     SEEDS="bb075c8cc4b7032d506008b68d4192298a09aeea@47.76.107.159:26656"
     PEERS=""
     sed -i 's|^persistent_peers *=.*|persistent_peers = "'$PEERS'"|' $HOME/.titan/config/config.toml
@@ -124,24 +125,26 @@ function install_node() {
     curl https://snapshots.dadunode.com/titan/titan_latest_tar.lz4 | lz4 -dc - | tar -xf - -C $HOME/.titan/data
     mv $HOME/.titan/priv_validator_state.json.backup $HOME/.titan/data/priv_validator_state.json
 
-    # Start the node process with PM2
-    pm2 restart artelad
+    # Use PM2 to start node process
 
-    echo '====================== Installation complete, please run source $HOME/.bash_profile after exiting the script to load environment variables ==========================='
+    pm2 restart artelad
+    
+
+    echo '====================== Installation complete. Please execute source $HOME/.bash_profile after exiting the script to load environment variables ==========================='
     
 }
 
-# Check the status of the titan service
+# Check titan service status
 function check_service_status() {
     pm2 list
 }
 
-# Query titan node logs
+# View titan node logs
 function view_logs() {
     pm2 logs titand
 }
 
-# Node uninstallation function
+# Uninstall node function
 function uninstall_node() {
     echo "Are you sure you want to uninstall the titan node program? This will delete all related data. [Y/N]"
     read -r -p "Please confirm: " response
@@ -154,7 +157,7 @@ function uninstall_node() {
             echo "Node program uninstalled."
             ;;
         *)
-            echo "Uninstall operation canceled."
+            echo "Uninstallation operation cancelled."
             ;;
     esac
 }
@@ -185,59 +188,64 @@ function add_validator() {
     read -p "Please enter your wallet name: " wallet_name
     read -p "Please enter the name you want to set for the validator: " validator_name
     
-    titand tx staking create-validator \
-    --amount="1000000uttnt" \
-    --pubkey=$(titand tendermint show-validator) \
-    --moniker="$validator_name" \
-    --commission-max-change-rate=0.01 \
-    --commission-max-rate=1.0 \
-    --commission-rate=0.07 \
-    --min-self-delegation=1 \
-    --fees 500uttnt \
-    --from="$wallet_name" 
+titand tx staking create-validator \
+--amount="1000000uttnt" \
+--pubkey=$(titand tendermint show-validator) \
+--moniker="$validator_name" \
+--commission-max-change-rate=0.01 \
+--commission-max-rate=1.0 \
+--commission-rate=0.07 \
+--min-self-delegation=1 \
+--fees 500uttnt \
+--from="$wallet_name" 
+
 }
+
 
 # Delegate to own validator
 function delegate_self_validator() {
-    read -p "Please enter the amount of tokens to delegate: " math
-    read -p "Please enter wallet name: " wallet_name
-    titand tx staking delegate $(titand keys show $wallet_name --bech val -a)  ${math}art --from $wallet_name --fees 500uttnt
+read -p "Please enter the number of staking tokens: " math
+read -p "Please enter wallet name: " wallet_name
+titand tx staking delegate $(titand keys show $wallet_name --bech val -a)  ${math}art --from $wallet_name --fees 500uttnt
+
 }
 
 # Export validator key
 function export_priv_validator_key() {
-    echo "==================== Please backup all the content below to your own notepad or Excel sheet ==========================================="
+    echo "====================Please backup all the contents below to your own notebook or excel sheet for record==========================================="
     cat ~/.titan/config/priv_validator_key.json
+    
 }
 
+
 function update_script() {
-    SCRIPT_URL="https://raw.githubusercontent.com/vinatechpro/titan-install/main/laodau.sh"
+    SCRIPT_URL="https://raw.githubusercontent.com/a3165458/titan/main/titan.sh"
     curl -o $SCRIPT_PATH $SCRIPT_URL
     chmod +x $SCRIPT_PATH
-    echo "The script has been updated. Please exit the script, and run bash titan.sh to rerun this script."
+    echo "Script has been updated. Please exit the script and rerun this script with bash titan.sh."
 }
 
 # Main menu
 function main_menu() {
     while true; do
         clear
-        echo "============================ Titan Validator Installation ===================================="
-        echo "To exit the script, press ctrl c on your keyboard to exit"
-        echo "Please choose an operation to execute:"
-        echo "1. Install Nodejs"
+        echo "============================titan node installation===================================="
+        echo "To exit the script, press ctrl c on the keyboard"
+        echo "Please choose the operation you want to execute:"
+        echo "1. Install node"
         echo "2. Create wallet"
         echo "3. Import wallet"
         echo "4. Check wallet address balance"
-        echo "5. Check node Validator sync status"
+        echo "5. Check node sync status"
         echo "6. Check current service status"
-        echo "7. Query run logs"
-        echo "8. Uninstall Nodejs"
+        echo "7. View logs"
+        echo "8. Uninstall node"
         echo "9. Set alias"  
         echo "10. Create validator"  
-        echo "11. Delegate to own validator" 
+        echo "11. Delegate to self" 
         echo "12. Backup validator private key" 
         echo "13. Update this script" 
-        read -p "Please enter an option (1-13): " OPTION
+        read -p "Please enter the option (1-13): " OPTION
 
         case $OPTION in
         1) install_node ;;
@@ -258,7 +266,8 @@ function main_menu() {
         echo "Press any key to return to the main menu..."
         read -n 1
     done
+    
 }
 
-# Show main menu
+# Display main menu
 main_menu
