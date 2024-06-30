@@ -1,101 +1,101 @@
 #!/bin/bash
 
-# Check if the script is run as the root user
+# 检查是否以root用户运行脚本
 if [ "$(id -u)" != "0" ]; then
-    echo "This script needs to be run with root user permissions."
-    echo "Please try switching to the root user using the 'sudo -i' command and then run this script again."
+    echo "This script needs to be run with root user privileges."
+    echo "Please try to switch to the root user using 'sudo -i' command and then run this script again."
     exit 1
 fi
 
-# Check and install Node.js and npm
+# 检查并安装 Node.js 和 npm
 function install_nodejs_and_npm() {
     if command -v node > /dev/null 2>&1; then
-        echo "Node.js is already installed"
+        echo "Node.js Installed"
     else
-        echo "Node.js is not installed, installing..."
+        echo "Node.js Not installed, installing..."
         curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
         sudo apt-get install -y nodejs
     fi
 
     if command -v npm > /dev/null 2>&1; then
-        echo "npm is already installed"
+        echo "npm installed"
     else
-        echo "npm is not installed, installing..."
+        echo "npm Not installed, installing..."
         sudo apt-get install -y npm
     fi
 }
 
-# Check and install PM2
+# 检查并安装 PM2
 function install_pm2() {
     if command -v pm2 > /dev/null 2>&1; then
-        echo "PM2 is already installed"
+        echo "PM2 Installed"
     else
-        echo "PM2 is not installed, installing..."
+        echo "PM2 Not installed, installing..."
         npm install pm2@latest -g
     fi
 }
 
-# Function to automatically set aliases
+# 自动设置快捷键的功能
 function check_and_set_alias() {
     local alias_name="art"
     local shell_rc="$HOME/.bashrc"
 
-    # For Zsh users, use .zshrc
+    # 对于Zsh用户，使用.zshrc
     if [ -n "$ZSH_VERSION" ]; then
         shell_rc="$HOME/.zshrc"
     elif [ -n "$BASH_VERSION" ]; then
         shell_rc="$HOME/.bashrc"
     fi
 
-    # Check if the alias is already set
+    # 检查快捷键是否已经设置
     if ! grep -q "$alias_name" "$shell_rc"; then
-        echo "Setting alias '$alias_name' to $shell_rc"
+        echo "Set shortcut keys '$alias_name' to $shell_rc"
         echo "alias $alias_name='bash $SCRIPT_PATH'" >> "$shell_rc"
-        # Add a message to remind the user to activate the alias
-        echo "Alias '$alias_name' is set. Please run 'source $shell_rc' to activate the alias, or reopen the terminal."
+        # 添加提醒用户激活快捷键的信息
+        echo "shortcut key '$alias_name' Already set. Please run 'source $shell_rc' to activate the shortcut, or reopen the terminal."
     else
-        # If the alias is already set, provide a message
-        echo "Alias '$alias_name' is already set in $shell_rc."
-        echo "If the alias does not work, please try running 'source $shell_rc' or reopen the terminal."
+        # 如果快捷键已经设置，提供一个提示信息
+        echo "shortcut key '$alias_name' Already set in $shell_rc。"
+        echo "If the shortcut doesn't work, try running 'source $shell_rc' Or reopen the terminal."
     fi
 }
 
-# Node installation function
+# 节点安装功能
 function install_node() {
     install_nodejs_and_npm
     install_pm2
 
-    # Set variables
+    # 设置变量
 
 
-    # Update and install necessary software
+    # 更新和安装必要的软件
     sudo apt update && sudo apt upgrade -y
     sudo apt install -y curl iptables build-essential git wget jq make gcc nano tmux htop nvme-cli pkg-config libssl-dev libleveldb-dev tar clang bsdmainutils ncdu unzip libleveldb-dev lz4 snapd
 
-    # Install Go
-    sudo rm -rf /usr/local/go
-    curl -L https://go.dev/dl/go1.22.0.linux-amd64.tar.gz | sudo tar -xzf - -C /usr/local
-    echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> $HOME/.bash_profile
-    source $HOME/.bash_profile
-    go version
+    # 安装 Go
+        sudo rm -rf /usr/local/go
+        curl -L https://go.dev/dl/go1.22.0.linux-amd64.tar.gz | sudo tar -xzf - -C /usr/local
+        echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> $HOME/.bash_profile
+        source $HOME/.bash_profile
+        go version
 
-    # Install all binaries
+    # 安装所有二进制文件
     cd $HOME
     git clone https://github.com/nezha90/titan.git
     cd titan
     go build ./cmd/titand
     cp titand /usr/local/bin
 
-    # Configure titand
+    # 配置titand
     export MONIKER="TitanNo1"
     titand init $MONIKER --chain-id titan-test-1
     titand config node tcp://localhost:53457
 
-    # Get initial files and address book
+    # 获取初始文件和地址簿
     wget https://raw.githubusercontent.com/nezha90/titan/main/genesis/genesis.json
     mv genesis.json ~/.titan/config/genesis.json
 
-    # Configure node
+    # 配置节点
     SEEDS="bb075c8cc4b7032d506008b68d4192298a09aeea@47.76.107.159:26656"
     PEERS=""
     sed -i 's|^persistent_peers *=.*|persistent_peers = "'$PEERS'"|' $HOME/.titan/config/config.toml
@@ -103,15 +103,15 @@ function install_node() {
     wget https://raw.githubusercontent.com/nezha90/titan/main/addrbook/addrbook.json
     mv addrbook.json ~/.titan/config/addrbook.json
 
-    # Configure pruning
+    # 配置裁剪
     sed -i -e "s/^pruning *=.*/pruning = \"custom\"/" $HOME/.titan/config/app.toml
     sed -i -e "s/^pruning-keep-recent *=.*/pruning-keep-recent = \"100\"/" $HOME/.titan/config/app.toml
     sed -i -e "s/^pruning-keep-every *=.*/pruning-keep-every = \"0\"/" $HOME/.titan/config/app.toml
     sed -i -e "s/^pruning-interval *=.*/pruning-interval = \"10\"/" $HOME/.titan/config/app.toml
-    sed -i 's/max_num_inbound_peers = 40/max_num_inbound_peers = 100/' -e 's/max_num_outbound_peers = 10/max_num_outbound_peers = 100/' $HOME/.titan/config/config.toml
+    sed -i -e 's/max_num_inbound_peers = 40/max_num_inbound_peers = 100/' -e 's/max_num_outbound_peers = 10/max_num_outbound_peers = 100/' $HOME/.titan/config/config.toml
     sed -i.bak -e "s/^minimum-gas-prices *=.*/minimum-gas-prices = \"0.0025uttnt\"/;" ~/.titan/config/app.toml
 
-    # Configure ports
+    # 配置端口
     node_address="tcp://localhost:53457"
     sed -i -e "s%^proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:53458\"%; s%^laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://127.0.0.1:53457\"%; s%^pprof_laddr = \"localhost:6060\"%pprof_laddr = \"localhost:53460\"%; s%^laddr = \"tcp://0.0.0.0:26656\"%laddr = \"tcp://0.0.0.0:53456\"%; s%^prometheus_listen_addr = \":26660\"%prometheus_listen_addr = \":53466\"%" $HOME/.titan/config/config.toml
     sed -i -e "s%^address = \"tcp://localhost:1317\"%address = \"tcp://0.0.0.0:53417\"%; s%^address = \":8080\"%address = \":53480\"%; s%^address = \"localhost:9090\"%address = \"0.0.0.0:53490\"%; s%^address = \"localhost:9091\"%address = \"0.0.0.0:53491\"%; s%:8545%:53445%; s%:8546%:53446%; s%:6065%:53465%" $HOME/.titan/config/app.toml
@@ -120,73 +120,73 @@ function install_node() {
 
     pm2 start titand -- start && pm2 save && pm2 startup
 
-    # Download snapshot
+    # 下载快照
     titand tendermint unsafe-reset-all --home $HOME/.artelad --keep-addr-book
     curl https://snapshots.dadunode.com/titan/titan_latest_tar.lz4 | lz4 -dc - | tar -xf - -C $HOME/.titan/data
     mv $HOME/.titan/priv_validator_state.json.backup $HOME/.titan/data/priv_validator_state.json
 
-    # Use PM2 to start node process
+    # 使用 PM2 启动节点进程
 
     pm2 restart artelad
     
 
-    echo '====================== Installation complete. Please execute source $HOME/.bash_profile after exiting the script to load environment variables ==========================='
+    echo '====================== After the installation is complete, please exit the script and execute source $HOME/.bash_profile to load the environment variables ==========================='
     
 }
 
-# Check titan service status
+# 查看titan 服务状态
 function check_service_status() {
     pm2 list
 }
 
-# View titan node logs
+# titan 节点日志查询
 function view_logs() {
     pm2 logs titand
 }
 
-# Uninstall node function
+# 卸载节点功能
 function uninstall_node() {
-    echo "Are you sure you want to uninstall the titan node program? This will delete all related data. [Y/N]"
-    read -r -p "Please confirm: " response
+    echo "Are you sure you want to uninstall the titan node program? This will delete all related data。[Y/N]"
+    read -r -p "please confirm: " response
 
     case "$response" in
         [yY][eE][sS]|[yY]) 
-            echo "Starting to uninstall the node program..."
+            echo "Start uninstalling the node program..."
             pm2 stop titand && pm2 delete titand
             rm -rf $HOME/.titand $HOME/titan $(which titand)
-            echo "Node program uninstalled."
+            echo "Node program uninstallation completed"
             ;;
         *)
-            echo "Uninstallation operation cancelled."
+            echo "Cancel the uninstallation operation."
             ;;
     esac
 }
 
-# Create wallet
+# 创建钱包
 function add_wallet() {
     titand keys add wallet
 }
 
-# Import wallet
+# 导入钱包
 function import_wallet() {
     titand keys add wallet --recover
 }
 
-# Check balance
+# 查询余额
 function check_balances() {
-    read -p "Please enter wallet address: " wallet_address
+    read -p "Please enter a wallet address: " wallet_address
     titand query bank balances "$wallet_address"
 }
 
-# Check node sync status
+# 查看节点同步状态
 function check_sync_status() {
     titand status | jq .SyncInfo
 }
 
-# Create validator
+# 创建验证者
 function add_validator() {
-    read -p "Please enter your wallet name: " wallet_name
-    read -p "Please enter the name you want to set for the validator: " validator_name
+    read -p "Please enter a wallet name: " wallet_name
+    read -p "Please enter a validator name: " validator_name
     
 titand tx staking create-validator \
 --amount="1000000uttnt" \
@@ -202,17 +202,17 @@ titand tx staking create-validator \
 }
 
 
-# Delegate to own validator
+# 给自己地址验证者质押
 function delegate_self_validator() {
-read -p "Please enter the number of staking tokens: " math
-read -p "Please enter wallet name: " wallet_name
+read -p "Please enter the amount of tokens staked: " math
+read -p "Please enter a wallet name: " wallet_name
 titand tx staking delegate $(titand keys show $wallet_name --bech val -a)  ${math}art --from $wallet_name --fees 500uttnt
 
 }
 
-# Export validator key
+# 导出验证者key
 function export_priv_validator_key() {
-    echo "====================Please backup all the contents below to your own notebook or excel sheet for record==========================================="
+    echo "====================Please back up all the following contents in your own notepad or excel sheet==========================================="
     cat ~/.titan/config/priv_validator_key.json
     
 }
@@ -222,14 +222,14 @@ function update_script() {
     SCRIPT_URL="https://raw.githubusercontent.com/a3165458/titan/main/titan.sh"
     curl -o $SCRIPT_PATH $SCRIPT_URL
     chmod +x $SCRIPT_PATH
-    echo "Script has been updated. Please exit the script and rerun this script with bash titan.sh."
+    echo "The script has been updated. Please exit the script and execute bash laodau.sh to rerun the script."
 }
 
-# Main menu
+# 主菜单
 function main_menu() {
     while true; do
         clear
-        echo "============================titan node installation===================================="
+        echo "============================Titan Node Installation===================================="
         echo "To exit the script, press ctrl c on the keyboard"
         echo "Please choose the operation you want to execute:"
         echo "1. Install node"
@@ -247,21 +247,22 @@ function main_menu() {
         echo "13. Update this script" 
         read -p "Please enter the option (1-13): " OPTION
 
+
         case $OPTION in
-        1) install_node ;;
-        2) add_wallet ;;
-        3) import_wallet ;;
-        4) check_balances ;;
-        5) check_sync_status ;;
-        6) check_service_status ;;
-        7) view_logs ;;
-        8) uninstall_node ;;
-        9) check_and_set_alias ;;
-        10) add_validator ;;
-        11) delegate_self_validator ;;
-        12) export_priv_validator_key ;;
-        13) update_script ;;
-        *) echo "Invalid option." ;;
+            1) install_node ;;
+            2) add_wallet ;;
+            3) import_wallet ;;
+            4) check_balances ;;
+            5) check_sync_status ;;
+            6) check_service_status ;;
+            7) view_logs ;;
+            8) uninstall_node ;;
+            9) check_and_set_alias ;;
+            10) add_validator ;;
+            11) delegate_self_validator ;;
+            12) export_priv_validator_key ;;
+            13) update_script ;;
+            *) echo "Invalid option." ;;
         esac
         echo "Press any key to return to the main menu..."
         read -n 1
@@ -269,5 +270,5 @@ function main_menu() {
     
 }
 
-# Display main menu
+# 显示主菜单
 main_menu
