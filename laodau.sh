@@ -206,7 +206,7 @@ titand tx staking create-validator \
 function delegate_self_validator() {
 read -p "Please enter the amount of tokens staked: " math
 read -p "Please enter a wallet name: " wallet_name
-titand tx staking delegate $(titand keys show $wallet_name --bech val -a)  ${math}art --from $wallet_name --fees 500uttnt
+titand tx staking delegate $(titand keys show $wallet_name --bech val -a)  ${math}uttnt --from $wallet_name --fees 500uttnt
 
 }
 
