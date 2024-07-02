@@ -1,9 +1,15 @@
 # Bash Shell Auto Install Titan Node L2 - Cassini Testnet on Ubuntu 22.04
-- Install (version v0.1.19)
+
+- Main Menu - L2 Edge (version v0.1.19)
+```
+curl -O https://raw.githubusercontent.com/vinatechpro/titan-install/main/main.sh && chmod u+x main.sh && ./main.sh
+```
+
+- Just For Install (version v0.1.19)
 ```
 curl -O https://raw.githubusercontent.com/vinatechpro/titan-install/main/install.sh && chmod u+x install.sh && ./install.sh
 ```
-- Update (version v0.1.19)
+- Just For Update (version v0.1.19)
 ```
 curl -O https://raw.githubusercontent.com/vinatechpro/titan-install/main/update.sh && chmod u+x update.sh && ./update.sh
 ```
