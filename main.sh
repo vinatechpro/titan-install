@@ -9,6 +9,13 @@ NC='\033[0m' # No Color
 # Function to display system information
 show_system_info() {
     echo " "
+    echo -e "${YELLOW}===== Titan L2 Edge Installation =====${NC}"
+    echo -e "${YELLOW}Website:${NC} https://titannet.io/"
+    echo -e "${YELLOW}Tg:${NC} https://t.me/titannet_dao"
+    echo -e "${YELLOW}Discord:${NC} https://discord.com/invite/titannet"
+    echo -e "${YELLOW}Support:${NC} https://t.me/LaoDauFx"
+    echo -e "${YELLOW}======================================${NC}"
+    echo " "
     echo -e "${YELLOW}========= System Information =========${NC}"
     echo -e "${YELLOW}CPU (Cores):${NC} $(nproc --all) cores - $(lscpu | grep '^CPU(s):' | awk '{print $2}') vCPU"
     echo -e "${YELLOW}RAM:${NC} $(free -m | awk '/^Mem:/{print int($2/1024+0.5)}') GB"
