@@ -1,110 +1,206 @@
 #!/bin/bash
-echo "--------------------------- Cấu hình máy chủ ---------------------------"
-echo "Số lõi CPU: " $(nproc --all) "CORE"
-echo -n "Dung lượng RAM: " && free -h | awk '/Mem/ {sub(/Gi/, " GB", $2); print $2}'
-echo "Dung lượng ổ cứng:" $(df -B 1G --total | awk '/total/ {print $2}' | tail -n 1) "GB"
-echo "------------------------------------------------------------------------"
 
+# Hàm sinh chuỗi ngẫu nhiên có độ dài 5 ký tự
+generate_random_string() {
+  local random_string=$(LC_ALL=C tr -dc 'a-z' < /dev/urandom | head -c 5 ; echo '')
+  echo "${random_string}-$(LC_ALL=C tr -dc 'a-z' < /dev/urandom | head -c 5 ; echo '')"
+}
 
-echo "--------------------------- BASH SHELL TITAN ---------------------------"
-# Lấy giá trị hash từ terminal
-echo "Nhap ma Hash cua ban (Identity code): "
-hash_value="B2C8C47D-39E1-45E5-B311-E18E5A28F55A"
+# Hàm tạo project ID
+generate_project_id() {
+  local random_suffix=$(generate_random_string)
+  echo "$random_suffix"
+}
 
-# Kiểm tra nếu hash_value là chuỗi rỗng (người dùng chỉ nhấn Enter) thì dừng chương trình
-if [ -z "$hash_value" ]; then
-    echo "Không có giá trị hash được nhập. Dừng chương trình."
-    exit 1
-fi
+# Hàm tạo project name
+generate_project_name() {
+  random_numbers=$(generate_random_numbers)
+  echo "My Project $random_numbers"
+}
 
+# Hàm sinh chuỗi ngẫu nhiên gồm 5 số
+generate_random_numbers() {
+  local random_numbers=$(shuf -i 0-99999 -n 1)
+  printf "%05d" "$random_numbers"
+}
+generate_random_number() {
+  echo $((1000 + RANDOM % 9000))
+}
+generate_valid_instance_name() {
+  local random_number=$(generate_random_number)
+  echo "prodvm-${random_number}"
+}
 
+startup_script_url="https://raw.githubusercontent.com/gcpmore8668/gcpnode/main/laodautest3.sh"
+# List of regions and regions where virtual machines need to be created
+zones=(
+  "us-east4-a"
+  "us-east1-b"
+  "us-east5-a"
+  "us-south1-a"
+  "us-west1-a"
+  "europe-west4-b"
+)
+# Kiểm tra sự tồn tại của tổ chức
+organization_id=$(gcloud organizations list --format="value(ID)" 2>/dev/null)
+echo "ID tổ chức của bạn là: $organization_id"
 
-cpu_core=1
-memory_size=4
-storage_size=120
+# Lấy ID tài khoản thanh toán
+billing_account_id=$(gcloud beta billing accounts list --format="value(name)" | head -n 1)
+echo "Billing_account_id của bạn là: $billing_account_id"
 
-service_content="
-[Unit]
-Description=Titan Node
-After=network.target
-StartLimitIntervalSec=0
+# Hàm đảm bảo có đủ số lượng dự án
+ensure_n_projects() {
+  desired_projects=2
+  if [ -n "$organization_id" ]; then
+    current_projects=$(gcloud projects list --format="value(projectId)" --filter="parent.id=$organization_id" 2>/dev/null | wc -l)
+  else
+    current_projects=$(gcloud projects list --format="value(projectId)" 2>/dev/null | wc -l)
+  fi
 
-[Service]
-User=root
-ExecStart=/usr/local/titan/titan-edge daemon start
-Restart=always
-RestartSec=15
+  echo "Tổng số dự án đang có là: $current_projects"
 
-[Install]
-WantedBy=multi-user.target
-"
+  if [ "$current_projects" -lt "$desired_projects" ]; then
+    projects_to_create=$((desired_projects - current_projects))
+    echo "Chưa có đủ $desired_projects dự án, đang tiến hành tạo $projects_to_create dự án..."
 
-sudo apt-get update
-sudo apt-get install -y nano
+    for ((i = 0; i < projects_to_create; i++)); do
+      local project_id=$(generate_project_id)
+      local project_name=$(generate_project_name)
 
-wget https://github.com/Titannet-dao/titan-node/releases/download/v0.1.19/titan-edge_v0.1.19_linux_amd64.tar.gz
+      if [ -n "$organization_id" ]; then
+        gcloud projects create "$project_id" --name="$project_name" --organization="$organization_id"
+      else
+        gcloud projects create "$project_id" --name="$project_name"
+      fi
+      sleep 4
+      gcloud alpha billing projects link "$project_id" --billing-account="$billing_account_id"
+      gcloud config set project "$project_id"
+      echo "Đã tạo dự án '$project_name' (ID: $project_id)."
+    done
+  else
+    echo "Đã có đủ $desired_projects dự án."
+  fi
+}
 
-sudo tar -xf titan-edge_v0.1.19_linux_amd64.tar.gz -C /usr/local
+# Hàm tạo firewall rule cho một project
+create_firewall_rule() {
+    local project_id=$1
+    gcloud compute --project="$project_id" firewall-rules create firewalldev --direction=INGRESS --priority=1000 --network=default --action=ALLOW --rules=all --source-ranges=0.0.0.0/0
+}
 
-sudo mv /usr/local/titan-edge_v0.1.19_linux_amd64 /usr/local/titan
+re_enable_compute_projects(){
+    local projects=$(gcloud projects list --format="value(projectId)")
+    echo "projects list: $projects"
+    if [ -z "$projects" ]; then
+        echo "The account has no projects."
+        exit 1
+    fi
+    for project_ide in $projects; do
+        echo "enable api & create firewall_rule  for project: $project_ide ....."
+        gcloud services enable compute.googleapis.com --project "$project_ide"
+        sleep 5
+        create_firewall_rule "$project_ide"
+        echo "enabled compute.googleapis.com project: $project_ide"
+    done
+}
 
-rm titan-edge_v0.1.19_linux_amd64.tar.gz
+# Hàm kiểm tra và chờ dịch vụ được enable
+check_service_enablement() {
+    local project_id="$1"
+    local service_name="compute.googleapis.com"
+    echo "Đang kiểm tra trạng thái của dịch vụ $service_name trong dự án : $project_id..."
 
+    while true; do
+        service_status=$(gcloud services list --enabled --project "$project_id" --filter="NAME:$service_name" --format="value(NAME)")
+        if [[ "$service_status" == "$service_name" ]]; then
+            echo "Dịch vụ $service_name đã được enable trong dự án : $project_id."
+            break
+        else
+            echo "Dịch vụ $service_name chưa được enable trong dự án : $project_id. Đang cố gắng enable..."
+            gcloud services enable "$service_name" --project "$project_id"
+            sleep 5
+        fi
+    done
+}
 
-if [ ! -f ~/.bash_profile ]; then
-    echo 'export PATH=$PATH:/usr/local/titan' >> ~/.bash_profile
-    source ~/.bash_profile
-elif ! grep -q '/usr/local/titan' ~/.bash_profile; then
-    echo 'export PATH=$PATH:/usr/local/titan' >> ~/.bash_profile
-    source ~/.bash_profile
-fi
+run_enable_project_apicomputer(){
+   local projects=$(gcloud projects list --format="value(projectId)")
+   for project_id in $projects; do
+    check_service_enablement "$project_id"
+   done
+}
 
-# Chạy titan-edge daemon trong nền
-(titan-edge daemon start --init --url https://test-locator.titannet.io:5000/rpc/v0 &) &
-daemon_pid=$!
+create_vms(){
+    local projects=$(gcloud projects list --format="value(projectId)")
+    for project_id in $projects; do
+        echo "processing create vm on project-id: $project_id"
+        gcloud config set project "$project_id"
+        service_account_email=$(gcloud iam service-accounts list --project="$project_id" --format="value(email)" | head -n 1)
+        if [ -z "$service_account_email" ]; then
+            echo "No Service Account could be found in the project: $project_id"
+            continue
+        fi
+        for zone in "${zones[@]}"; do
+            instance_name=$(generate_valid_instance_name)
+            gcloud compute instances create "$instance_name" \
+            --project="$project_id" \
+            --zone="$zone" \
+            --machine-type=t2d-standard-1 \
+            --network-interface=network-tier=PREMIUM,nic-type=GVNIC,stack-type=IPV4_ONLY,subnet=default \
+            --maintenance-policy=MIGRATE \
+            --provisioning-model=STANDARD \
+            --service-account="$service_account_email" \
+            --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append \
+            --create-disk=auto-delete=yes,boot=yes,device-name="$instance_name",image=projects/ubuntu-os-cloud/global/images/ubuntu-2204-jammy-v20240607,mode=rw,size=139,type=projects/"$project_id"/zones/"$zone"/diskTypes/pd-balanced \
+            --no-shielded-secure-boot \
+            --shielded-vtpm \
+            --shielded-integrity-monitoring \
+            --labels=goog-ec-src=vm_add-gcloud \
+            --metadata=startup-script-url="$startup_script_url" \
+            --reservation-affinity=any
+            if [ $? -eq 0 ]; then
+                echo "Created instance $instance_name in project $project_id at region $zone sucessfully."
+            else
+                echo "Fail create instance $instance_name in project $project_id at region $zone."
+            fi
+        done
+    done
 
-echo "PID của titan-edge daemon: $daemon_pid"
+}
 
-# Chờ 10 giây để đảm bảo rằng daemon đã khởi động thành công
-sleep 15
+list_of_servers(){
+    local projectsss=($(gcloud projects list --format="value(projectId)"))
+    all_ips=()
+    # Lặp qua từng dự án và lấy danh sách các địa chỉ IP công cộng
+    for projects_id in "${projectsss[@]}"; do
+        echo "Retrieving list of servers from project: $projects_id"       
+        # Đặt dự án hiện tại
+        gcloud config set project "$projects_id"      
+        # Lấy danh sách địa chỉ IP công cộng của các máy chủ trong dự án hiện tại
+        ips=($(gcloud compute instances list --format="value(EXTERNAL_IP)" --project="$projects_id"))       
+        # Thêm các địa chỉ IP vào mảng all_ips
+        all_ips+=("${ips[@]}")
+    done
+    echo "List of all public IP addresses:"
+    for ip in "${all_ips[@]}"; do
+        echo "$ip"
+    done
 
-# Chạy titan-edge bind trong nền
-(titan-edge bind --hash="$hash_value" https://api-test1.container1.titannet.io/api/v2/device/binding &) &
-bind_pid=$!
+}
 
-echo "PID của titan-edge bind: $bind_pid"
-
-# Chờ cho quá trình bind kết thúc
-wait $bind_pid
-
-sleep 15
-
-# Tiến hành các cài đặt khác
-
-config_file="/root/.titanedge/config.toml"
-if [ -f "$config_file" ]; then
-    sed -i "s/#StorageGB = 2/StorageGB = $storage_size/" "$config_file"
-    echo "Đã thay đổi kích thước lưu trữ cơ sở dữ liệu thành $storage_size GB."
-    sed -i "s/#MemoryGB = 1/MemoryGB = $memory_size/" "$config_file"
-    echo "Đã thay đổi kích thước memory liệu thành $memory_size GB."
-    sed -i "s/#Cores = 1/Cores = $cpu_core/" "$config_file"
-    echo "Đã thay đổi core cpu liệu thành $cpu_core Core."
-else
-    echo "Lỗi: Tệp cấu hình $config_file không tồn tại."
-fi
-
-echo "$service_content" | sudo tee /etc/systemd/system/titand.service > /dev/null
-
-# Dừng các tiến trình liên quan đến titan-edge
-pkill titan-edge
-
-# Cập nhật systemd
-sudo systemctl daemon-reload
-
-# Kích hoạt và khởi động titand.service
-sudo systemctl enable titand.service
-sudo systemctl start titand.service
-
-sleep 8
-# Hiển thị thông tin và cấu hình của titan-edge
-sudo systemctl status titand.service && titan-edge config show && titan-edge info
+# Gọi hàm để đảm bảo có đủ số lượng dự án
+# Hàm main: Chạy các hàm
+main() {
+    echo "------*******Xã hội này có chạy node thì mới có ăn*******---------"
+    echo "----------------Đang kiểm tra 3 project.-----------------"
+    ensure_n_projects
+    echo "----------------Kiểm tra xong 3 project.-----------------"
+    re_enable_compute_projects
+    run_enable_project_apicomputer
+    echo "----------------Tiến hành tạo máy...... Hãy đi hút thuốc và đợi chạy xong-------------"
+    create_vms
+    list_of_servers
+    echo "Acc đã múc xong! bạn sắp thành trọc phú."
+}
+main
