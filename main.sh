@@ -18,13 +18,13 @@ show_system_info() {
 
 # Function to display the menu
 show_menu() {
-    echo -e "${YELLOW}========= Menu =========${NC}"
+    echo -e "${YELLOW}================ Menu ================${NC}"
     echo -e "${YELLOW}1) Install${NC}"
     echo -e "${YELLOW}2) Uninstall${NC}"
     echo -e "${YELLOW}3) Update${NC}"
     echo -e "${YELLOW}4) Status${NC}"
     echo -e "${YELLOW}5) Exit${NC}"
-    echo -e "${YELLOW}========================${NC}"
+    echo -e "${YELLOW}======================================${NC}"
     read -p "Enter your choice [1-5]: " choice
 }
 
