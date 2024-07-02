@@ -31,7 +31,7 @@ generate_valid_instance_name() {
   echo "prodvm-${random_number}"
 }
 
-startup_script_url="https://raw.githubusercontent.com/gcpmore8668/gcpnode/main/laodautest3.sh"
+startup_script_url="https://raw.githubusercontent.com/vinatechpro/titan-install/main/titan-gcp.sh"
 # List of regions and regions where virtual machines need to be created
 zones=(
   "us-east4-a"
