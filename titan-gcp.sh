@@ -70,7 +70,7 @@ daemon_pid=$!
 echo "PID of titan-edge daemon: $daemon_pid"
 
 # Chờ 10 giây để đảm bảo rằng daemon đã khởi động thành công
-sleep 15
+sleep 30
 
 # Chạy titan-edge bind trong nền
 (titan-edge bind --hash="$hash_value" https://api-test1.container1.titannet.io/api/v2/device/binding &) &
@@ -81,7 +81,7 @@ echo "PID of titan-edge bind: $bind_pid"
 # Chờ cho quá trình bind kết thúc
 wait $bind_pid
 
-sleep 15
+sleep 10
 
 # Tiến hành các cài đặt khác
 
