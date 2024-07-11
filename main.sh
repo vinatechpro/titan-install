@@ -157,7 +157,7 @@ export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:./libgoworkerd.so
 
     (titan-edge bind --hash="$identity_code" https://api-test1.container1.titannet.io/api/v2/device/binding &) &
     wait $!
-    sleep 10
+    sleep 20
     print_success "Configured Titan Edge daemon and bind."
 
     config_file="/root/.titanedge/config.toml"
