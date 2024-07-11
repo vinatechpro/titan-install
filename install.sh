@@ -94,7 +94,7 @@ echo "PID of titan-edge bind: $bind_pid"
 # Chờ cho quá trình bind kết thúc
 wait $bind_pid
 
-sleep 10
+sleep 20
 
 # Tiến hành các cài đặt khác
 
