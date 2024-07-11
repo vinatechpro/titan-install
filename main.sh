@@ -153,11 +153,11 @@ export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:./libgoworkerd.so
     print_success "Updated PATH in ~/.bash_profile"
 
     (titan-edge daemon start --init --url https://cassini-locator.titannet.io:5000/rpc/v0 &) &
-    sleep 15
+    sleep 30
 
     (titan-edge bind --hash="$identity_code" https://api-test1.container1.titannet.io/api/v2/device/binding &) &
     wait $!
-    sleep 15
+    sleep 10
     print_success "Configured Titan Edge daemon and bind."
 
     config_file="/root/.titanedge/config.toml"
