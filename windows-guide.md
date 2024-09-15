@@ -7,6 +7,8 @@
   - Cài đặt Terminal: https://apps.microsoft.com/detail/9n0dx20hk701?rtc=1&hl=vi-vn&gl=VN
   - Download Titan node (v0.1.16): https://github.com/Titannet-dao/titan-node/releases/download/v0.1.16/titan_v0.1.16_windows_amd64.tar.gz
   - Download Titan node (v0.1.18): https://github.com/Titannet-dao/titan-node/releases/download/v0.1.18/titan_v0.1.18_windows_amd64.tar.gz
+ - Download Titan node (v0.1.20):
+https://github.com/Titannet-dao/titan-node/releases/download/v0.1.20/titan-edge_v0.1.20_246b9dd_widnows_amd64.tar.gz
 ### Bước 2: Giải nén file tải về `titan_v0.1.16_windows_amd64.tar.gz`
 - Kết quả giải nén:
   
