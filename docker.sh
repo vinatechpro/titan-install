@@ -92,7 +92,7 @@ for ip in $public_ips; do
 
         # Ensure storage path exists
         sudo mkdir -p "$storage_path"
-        chmod -R 755 "$storage_path"
+        sudo chmod -R 777 "$storage_path"
 
         # Run the container with restart always policy
         container_id=$(docker run -d --restart always -v "$storage_path:/root/.titanedge/storage" --name "titan_${ip}_${i}" --net=host nezha123/titan-edge)
