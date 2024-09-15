@@ -73,6 +73,7 @@ install_docker() {
                 sudo sysctl -p
                 
                 echo "Configuration updated and applied successfully."
+                sudo setenforce 0
                 ;;
             arch)
                 echo -e "${GREEN}Installing Docker on Arch Linux...${NC}"
