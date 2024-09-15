@@ -2,7 +2,7 @@
 > - Tài liệu chính thức: https://titannet.gitbook.io/titan-network-en/huygens-testnet/installation-and-earnings/less-than-greater-than-command-line-installation
 > - Link đăng ký Dashboard (ref): https://test1.titannet.io/intiveRegister?code=CtKlIe
 
-### UPDATE: Phiên bản mới nhất hiện tại là v0.1.18 - Tải theo đường link v0.1.18 và làm theo các bước tương tự.
+### UPDATE: Phiên bản mới nhất hiện tại là v0.1.20 - Tải theo đường link v0.1.20 và làm theo các bước tương tự.
 ### Bước 1: Cài đặt Terminal & Download Titan node v0.1.16
   - Cài đặt Terminal: https://apps.microsoft.com/detail/9n0dx20hk701?rtc=1&hl=vi-vn&gl=VN
   - Download Titan node (v0.1.16): https://github.com/Titannet-dao/titan-node/releases/download/v0.1.16/titan_v0.1.16_windows_amd64.tar.gz
