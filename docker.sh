@@ -49,6 +49,30 @@ install_docker() {
             fedora)
                 echo -e "${GREEN}Installing Docker on Fedora...${NC}"
                 dnf install -y docker
+                # Define the configuration values
+                CONFIG_VALUES="
+                net.core.rmem_max=26214400
+                net.core.rmem_default=26214400
+                net.core.wmem_max=26214400
+                net.core.wmem_default=26214400
+                "
+                
+                # Path to the sysctl configuration file
+                SYSCTL_CONF="/etc/sysctl.conf"
+                
+                # Backup the original sysctl.conf file
+                echo "Backing up the original sysctl.conf to sysctl.conf.bak..."
+                sudo cp $SYSCTL_CONF $SYSCTL_CONF.bak
+                
+                # Append the configuration values to sysctl.conf
+                echo "Updating sysctl.conf with new configuration values..."
+                echo "$CONFIG_VALUES" | sudo tee -a $SYSCTL_CONF > /dev/null
+                
+                # Apply the changes
+                echo "Applying the new sysctl configuration..."
+                sudo sysctl -p
+                
+                echo "Configuration updated and applied successfully."
                 ;;
             arch)
                 echo -e "${GREEN}Installing Docker on Arch Linux...${NC}"
