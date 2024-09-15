@@ -1,6 +1,6 @@
 #!/bin/bash
-VERSION='v0.1.19'
-PATCH="89e53b6"
+VERSION='v0.1.20'
+PATCH="246b9dd"
 echo "Update Titan node ${VERSION}"
 echo "..."
 
