@@ -46,8 +46,8 @@ WantedBy=multi-user.target
 sudo apt-get update
 sudo apt-get install -y nano
 
-VERSION='v0.1.19'
-PATCH="89e53b6"
+VERSION='v0.1.20'
+PATCH="246b9dd"
 
 wget https://github.com/Titannet-dao/titan-node/releases/download/${VERSION}/titan-l2edge_${VERSION}_patch_linux_amd64.tar.gz
 
