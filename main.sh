@@ -77,8 +77,8 @@ uninstall_titan() {
 
 # Function to install Titan node L2
 install_titan() {
-    local VERSION='v0.1.19'
-    local PATCH="89e53b6"
+    local VERSION='v0.1.20'
+    local PATCH="246b9dd"
     local identity_code
     local cpu_core
     local memory_size
@@ -203,8 +203,8 @@ WantedBy=multi-user.target"
 
 # Function to update Titan node L2
 update_titan() {
-    local VERSION='v0.1.19'
-    local PATCH="89e53b6"
+    local VERSION='v0.1.20'
+    local PATCH="246b9dd"
 
     wget "https://github.com/Titannet-dao/titan-node/releases/download/${VERSION}/titan-l2edge_${VERSION}_patch_linux_amd64.tar.gz"
     if [ $? -eq 0 ]; then
