@@ -30,6 +30,42 @@ if [ -z "$public_ips" ]; then
     exit 1
 fi
 
+# Define a function to update sysctl configuration
+update_sysctl_config() {
+    # Define the configuration values
+    local CONFIG_VALUES="
+net.core.rmem_max=26214400
+net.core.rmem_default=26214400
+net.core.wmem_max=26214400
+net.core.wmem_default=26214400
+"
+
+    # Path to the sysctl configuration file
+    local SYSCTL_CONF="/etc/sysctl.conf"
+
+    # Backup the original sysctl.conf file
+    echo "Backing up the original sysctl.conf to sysctl.conf.bak..."
+    sudo cp "$SYSCTL_CONF" "$SYSCTL_CONF.bak"
+
+    # Append the configuration values to sysctl.conf
+    echo "Updating sysctl.conf with new configuration values..."
+    echo "$CONFIG_VALUES" | sudo tee -a "$SYSCTL_CONF" > /dev/null
+
+    # Apply the changes
+    echo "Applying the new sysctl configuration..."
+    sudo sysctl -p
+
+    echo "Configuration updated and applied successfully."
+
+    # Check if SELinux is present and handle accordingly
+    if command -v setenforce &> /dev/null; then
+        echo "Disabling SELinux enforcement..."
+        sudo setenforce 0
+    else
+        echo "SELinux is not installed or not applicable."
+    fi
+}
+
 # Function to install Docker based on the distribution
 install_docker() {
     if [ -f /etc/os-release ]; then
@@ -45,35 +81,12 @@ install_docker() {
                 echo -e "${GREEN}Installing Docker on $ID...${NC}"
                 yum install -y yum-utils
                 yum install -y docker
+                update_sysctl_config
                 ;;
             fedora)
                 echo -e "${GREEN}Installing Docker on Fedora...${NC}"
                 dnf install -y docker
-                # Define the configuration values
-                CONFIG_VALUES="
-                net.core.rmem_max=26214400
-                net.core.rmem_default=26214400
-                net.core.wmem_max=26214400
-                net.core.wmem_default=26214400
-                "
-                
-                # Path to the sysctl configuration file
-                SYSCTL_CONF="/etc/sysctl.conf"
-                
-                # Backup the original sysctl.conf file
-                echo "Backing up the original sysctl.conf to sysctl.conf.bak..."
-                sudo cp $SYSCTL_CONF $SYSCTL_CONF.bak
-                
-                # Append the configuration values to sysctl.conf
-                echo "Updating sysctl.conf with new configuration values..."
-                echo "$CONFIG_VALUES" | sudo tee -a $SYSCTL_CONF > /dev/null
-                
-                # Apply the changes
-                echo "Applying the new sysctl configuration..."
-                sudo sysctl -p
-                
-                echo "Configuration updated and applied successfully."
-                sudo setenforce 0
+                update_sysctl_config
                 ;;
             arch)
                 echo -e "${GREEN}Installing Docker on Arch Linux...${NC}"
