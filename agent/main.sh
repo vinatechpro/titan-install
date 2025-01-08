@@ -155,6 +155,11 @@ while [[ $# -gt 0 ]]; do
       fi
       shift
       ;;
+       --key=*)
+      KEY_ARG="$1"
+      KEY=$(echo "$KEY_ARG" | sed 's/--key=//g')
+      shift
+       ;;
     *)
       break
       ;;
@@ -217,15 +222,14 @@ check_command "multipass --version"
 translate "Multipass đã sẵn sàng."
 
 # Lấy key từ tham số hoặc yêu cầu nhập
-if [ -z "$1" ]; then
+if [ -z "$KEY" ]; then
     read -p "$(translate "Vui lòng nhập Titan Agent key: ")" KEY
     if [ -z "$KEY" ]; then
        translate "Bạn chưa nhập key. Script dừng."
         exit 1
     fi
 else
-    KEY_ARG=$1
-    KEY=$(echo "$KEY_ARG" | sed 's/--key=//g')
+
     if [ -z "$KEY" ]; then
         translate "Key không hợp lệ. Script dừng."
         exit 1
