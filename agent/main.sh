@@ -191,10 +191,10 @@ fi
 translate "Tải và giải nén Titan Agent..."
 wget https://pcdn.titannet.io/test4/bin/agent-linux.zip
 check_command "wget https://pcdn.titannet.io/test4/bin/agent-linux.zip"
-mkdir -p /opt/titanagent
-check_command "mkdir -p /opt/titanagent"
-unzip agent-linux.zip -d /opt/titanagent
-check_command "unzip agent-linux.zip -d /opt/titanagent"
+mkdir -p /root/titanagent
+check_command "mkdir -p /root/titanagent"
+unzip agent-linux.zip -d /usr/local
+check_command "unzip agent-linux.zip -d /usr/local"
 translate "Titan Agent đã được tải và giải nén."
 
 # Lấy tên người dùng hiện tại
@@ -208,8 +208,8 @@ Description=Titan Agent
 After=network.target
 
 [Service]
-WorkingDirectory=/opt/titanagent
-ExecStart=/opt/titanagent/agent --working-dir=/opt/titanagent --server-url=https://test4-api.titannet.io --key="$KEY"
+WorkingDirectory=/root/titanagent
+ExecStart=agent --working-dir=/root/titanagent --server-url=https://test4-api.titannet.io --key="$KEY"
 Restart=on-failure
 User=$USER
 Group=$USER
