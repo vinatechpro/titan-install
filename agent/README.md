@@ -13,9 +13,9 @@
 
 ## Install
 ```
-curl -O https://raw.githubusercontent.com/vinatechpro/titan-install/refs/heads/main/agent/main.sh && chmod u+x main.sh && ./main.sh --key='your_key_here' --ver=en
+curl -O https://raw.githubusercontent.com/vinatechpro/titan-install/refs/heads/main/agent/main.sh && chmod u+x main.sh && ./main.sh --key=your_key_here --ver=en
 ```
-**Get your key**: `--key='your_key_here'`
+**Get your key**: `--key=your_key_here`
 
 *Please follow document for get your key:* https://titannet.gitbook.io/titan-network-en/galileo-testnet/node-participation-guide/run-titan-agent-on-linux#id-2.-get-your-key
 
