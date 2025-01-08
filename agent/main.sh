@@ -215,6 +215,13 @@ fi
 
 unzip agent-linux.zip -d /usr/local
 check_command "unzip agent-linux.zip -d /usr/local"
+
+# Make the agent executable and move to /usr/local/bin
+sudo chmod +x /usr/local/agent
+check_command "chmod +x /usr/local/agent"
+sudo cp /usr/local/agent /usr/local/bin/
+check_command "cp /usr/local/agent /usr/local/bin/"
+
 translate "Titan Agent đã được tải và giải nén."
 
 # Lấy tên người dùng hiện tại
@@ -229,7 +236,7 @@ After=network.target
 
 [Service]
 WorkingDirectory=/root/titanagent
-ExecStart=agent --working-dir=/root/titanagent --server-url=https://test4-api.titannet.io --key="$KEY"
+ExecStart=/usr/local/bin/agent --working-dir=/root/titanagent --server-url=https://test4-api.titannet.io --key="$KEY"
 Restart=on-failure
 User=$USER
 Group=$USER
