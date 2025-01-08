@@ -142,23 +142,14 @@ else
     check_command "apt update"
     apt install -y snapd
     check_command "apt install -y snapd"
-    # Cài đặt unzip
-    apt install -y unzip
-    check_command "apt install -y unzip"
   elif command -v dnf &> /dev/null; then
     translate "Hệ thống là Fedora."
     dnf install -y snapd
     check_command "dnf install -y snapd"
-    # Cài đặt unzip
-    dnf install -y unzip
-    check_command "dnf install -y unzip"
   elif command -v yum &> /dev/null; then
      translate "Hệ thống là CentOS/RHEL."
     yum install -y snapd
     check_command "yum install -y snapd"
-    # Cài đặt unzip
-    yum install -y unzip
-    check_command "yum install -y unzip"
   else
       translate "Hệ thống không được hỗ trợ. Không thể cài Snap tự động."
       exit 1
@@ -202,6 +193,26 @@ wget https://pcdn.titannet.io/test4/bin/agent-linux.zip
 check_command "wget https://pcdn.titannet.io/test4/bin/agent-linux.zip"
 mkdir -p /root/titanagent
 check_command "mkdir -p /root/titanagent"
+
+# Kiểm tra và cài đặt unzip
+if ! command -v unzip &> /dev/null; then
+    if command -v apt &> /dev/null; then
+        apt update
+        check_command "apt update"
+        apt install -y unzip
+        check_command "apt install -y unzip"
+    elif command -v dnf &> /dev/null; then
+        dnf install -y unzip
+        check_command "dnf install -y unzip"
+    elif command -v yum &> /dev/null; then
+        yum install -y unzip
+        check_command "yum install -y unzip"
+    else
+        translate "Hệ thống không hỗ trợ cài đặt unzip tự động, vui lòng cài đặt thủ công."
+        exit 1
+    fi
+fi
+
 unzip agent-linux.zip -d /usr/local
 check_command "unzip agent-linux.zip -d /usr/local"
 translate "Titan Agent đã được tải và giải nén."
