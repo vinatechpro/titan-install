@@ -33,6 +33,7 @@ translate() {
         "Kiểm tra trạng thái service systemd...") translated_text="Kiểm tra trạng thái service systemd...";;
         "Titan Agent đã được cài đặt và khởi động dưới dạng service systemd.") translated_text="Titan Agent đã được cài đặt và khởi động dưới dạng service systemd.";;
         "Quá trình cài đặt và chạy Titan Agent hoàn tất.") translated_text="Quá trình cài đặt và chạy Titan Agent hoàn tất.";;
+         "Hệ thống không hỗ trợ cài đặt unzip tự động, vui lòng cài đặt thủ công.") translated_text="Hệ thống không hỗ trợ cài đặt unzip tự động, vui lòng cài đặt thủ công.";;
          *) translated_text="$text";;
       esac
       ;;
@@ -63,6 +64,7 @@ translate() {
         "Kiểm tra trạng thái service systemd...") translated_text="Checking systemd service status...";;
         "Titan Agent đã được cài đặt và khởi động dưới dạng service systemd.") translated_text="Titan Agent has been installed and started as a systemd service.";;
         "Quá trình cài đặt và chạy Titan Agent hoàn tất.") translated_text="Installation and running of Titan Agent completed.";;
+         "Hệ thống không hỗ trợ cài đặt unzip tự động, vui lòng cài đặt thủ công.") translated_text="System doesn't support unzip installation, please install it manually.";;
          *) translated_text="$text";;
       esac
       ;;
@@ -93,6 +95,7 @@ translate() {
         "Memeriksa status service systemd...") translated_text="Memeriksa status service systemd...";;
        "Titan Agent telah terpasang dan berjalan sebagai service systemd.") translated_text="Titan Agent telah terpasang dan berjalan sebagai service systemd.";;
         "Quá trình cài đặt và chạy Titan Agent hoàn tất.") translated_text="Proses instalasi dan menjalankan Titan Agent selesai.";;
+        "Hệ thống không hỗ trợ cài đặt unzip tự động, vui lòng cài đặt thủ công.") translated_text="Sistem tidak mendukung pemasangan unzip secara otomatis, silakan pasang secara manual.";;
          *) translated_text="$text";;
       esac
       ;;
@@ -123,6 +126,7 @@ translate() {
         "Проверка статуса службы systemd...") translated_text="Проверка статуса службы systemd...";;
         "Titan Agent установлен и запущен как служба systemd.") translated_text="Titan Agent установлен и запущен как служба systemd.";;
         "Установка и запуск Titan Agent завершены.") translated_text="Установка и запуск Titan Agent завершены.";;
+       "Hệ thống không hỗ trợ cài đặt unzip tự động, vui lòng cài đặt thủ công.") translated_text="Система не поддерживает автоматическую установку unzip, пожалуйста, установите его вручную.";;
         *) translated_text="$text";;
       esac
       ;;
@@ -133,27 +137,46 @@ translate() {
   echo "$translated_text"
 }
 
-
 # Set default language to English
 LANGUAGE="en"
+KEY=""
 
-# Get language parameter from command line
+# Parse command line arguments
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --ver=*)
       LANGUAGE="${1#--ver=}"
       shift
       ;;
+    --key=*)
+      KEY="${1#--key=}"
+      shift
+      ;;
     *)
-      break
+      echo "Unknown parameter: $1"
+      echo "Usage: $0 [--key=<your_key>] [--ver=<language>]"
+      exit 1
       ;;
   esac
 done
+
 
 # Check if the user is root
 if [[ $EUID -ne 0 ]]; then
    translate "Script này cần được chạy với quyền root."
    exit 1
+fi
+
+# Check if the key is provided
+if [ -z "$KEY" ]; then
+    translate "Bạn chưa nhập key. Script dừng."
+    exit 1
+fi
+
+# Validate the key (you can add more complex validation if needed)
+if [[ ! "$KEY" =~ ^[a-zA-Z0-9-]+$ ]]; then
+    translate "Key không hợp lệ. Script dừng."
+    exit 1
 fi
 
 # Function to check if a command was successful
@@ -204,22 +227,6 @@ translate "Kiểm tra Multipass..."
 multipass --version
 check_command "multipass --version"
 translate "Multipass đã sẵn sàng."
-
-# Get key from parameter or ask for input
-if [ -z "$1" ]; then
-    read -p "$(translate "Vui lòng nhập Titan Agent key: ")" KEY
-    if [ -z "$KEY" ]; then
-       translate "Bạn chưa nhập key. Script dừng."
-        exit 1
-    fi
-else
-    KEY_ARG=$1
-    KEY=$(echo "$KEY_ARG" | sed 's/--key=//g')
-    if [ -z "$KEY" ]; then
-        translate "Key không hợp lệ. Script dừng."
-        exit 1
-    fi
-fi
 
 # Download and extract Titan Agent
 translate "Tải và giải nén Titan Agent..."
