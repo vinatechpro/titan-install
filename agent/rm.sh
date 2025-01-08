@@ -96,6 +96,52 @@ translate() {
          *) echo "$text";;
       esac
       ;;
+    "zh")
+      case "$text" in
+        "Script này cần được chạy với quyền root.") echo "此脚本必须以 root 权限运行。";;
+        "Lệnh '$1' thất bại.") echo "命令 '$1' 失败。";;
+        "Dừng Titan Agent service...") echo "正在停止 Titan Agent 服务...";;
+        "Titan Agent service đã được dừng.") echo "Titan Agent 服务已停止。";;
+        "Gỡ cài đặt Titan Agent service...") echo "正在卸载 Titan Agent 服务...";;
+        "Titan Agent service đã được gỡ cài đặt.") echo "Titan Agent 服务已卸载。";;
+         "Xóa file thực thi Titan Agent...") echo "正在删除 Titan Agent 可执行文件...";;
+        "File thực thi Titan Agent đã được xóa.") echo "Titan Agent 可执行文件已删除。";;
+         "Xóa file nén Titan Agent...") echo "正在删除 Titan Agent 压缩文件...";;
+        "File nén Titan Agent đã được xóa.") echo "Titan Agent 压缩文件已删除。";;
+        "Xóa thư mục làm việc Titan Agent...") echo "正在删除 Titan Agent 工作目录...";;
+        "Thư mục làm việc Titan Agent đã được xóa.") echo "Titan Agent 工作目录已删除。";;
+        "Gỡ cài đặt Multipass...") echo "正在卸载 Multipass...";;
+        "Multipass đã được gỡ cài đặt.") echo "Multipass 已卸载。";;
+        "Gỡ cài đặt Snap...") echo "正在卸载 Snap...";;
+        "Snap đã được gỡ cài đặt.") echo "Snap 已卸载。";;
+        "Quá trình gỡ cài đặt Titan Agent hoàn tất.") echo "Titan Agent 卸载过程完成。";;
+        "Không tìm thấy Titan Agent service.") echo "未找到 Titan Agent 服务。";;
+         *) echo "$text";;
+      esac
+      ;;
+    "tr")
+      case "$text" in
+        "Script này cần được chạy với quyền root.") echo "Bu komut dosyası root ayrıcalıklarıyla çalıştırılmalıdır.";;
+        "Lệnh '$1' thất bại.") echo "'$1' komutu başarısız oldu.";;
+        "Dừng Titan Agent service...") echo "Titan Agent hizmeti durduruluyor...";;
+        "Titan Agent service đã được dừng.") echo "Titan Agent hizmeti durduruldu.";;
+        "Gỡ cài đặt Titan Agent service...") echo "Titan Agent hizmeti kaldırılıyor...";;
+        "Titan Agent service đã được gỡ cài đặt.") echo "Titan Agent hizmeti kaldırıldı.";;
+         "Xóa file thực thi Titan Agent...") echo "Titan Agent çalıştırılabilir dosyası kaldırılıyor...";;
+        "File thực thi Titan Agent đã được xóa.") echo "Titan Agent çalıştırılabilir dosyası kaldırıldı.";;
+         "Xóa file nén Titan Agent...") echo "Titan Agent arşiv dosyası kaldırılıyor...";;
+        "File nén Titan Agent đã được xóa.") echo "Titan Agent arşiv dosyası kaldırıldı.";;
+        "Xóa thư mục làm việc Titan Agent...") echo "Titan Agent çalışma dizini kaldırılıyor...";;
+        "Thư mục làm việc Titan Agent đã được xóa.") echo "Titan Agent çalışma dizini kaldırıldı.";;
+         "Gỡ cài đặt Multipass...") echo "Multipass kaldırılıyor...";;
+        "Multipass đã được gỡ cài đặt.") echo "Multipass kaldırıldı.";;
+         "Gỡ cài đặt Snap...") echo "Snap kaldırılıyor...";;
+        "Snap đã được gỡ cài đặt.") echo "Snap kaldırıldı.";;
+        "Quá trình gỡ cài đặt Titan Agent hoàn tất.") echo "Titan Agent kaldırma işlemi tamamlandı.";;
+        "Không tìm thấy Titan Agent service.") echo "Titan Agent hizmeti bulunamadı.";;
+         *) echo "$text";;
+      esac
+      ;;
     *)
       echo "$text"
       ;;
