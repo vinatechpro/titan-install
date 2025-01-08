@@ -3,132 +3,136 @@
 # Function to translate text based on the selected language
 translate() {
   local text="$1"
+  local translated_text
+
   case "$LANGUAGE" in
     "vi")
       case "$text" in
-        "Script này cần được chạy với quyền root.") echo "Script này cần được chạy với quyền root.";;
-        "Lệnh '$1' thất bại.") echo "Lệnh '$1' thất bại.";;
-        "Kiểm tra Snap...") echo "Kiểm tra Snap...";;
-        "Snap đã được cài đặt.") echo "Snap đã được cài đặt.";;
-        "Snap chưa được cài đặt, tiến hành cài đặt...") echo "Snap chưa được cài đặt, tiến hành cài đặt...";;
-        "Hệ thống là Debian/Ubuntu.") echo "Hệ thống là Debian/Ubuntu.";;
-        "Hệ thống là Fedora.") echo "Hệ thống là Fedora.";;
-        "Hệ thống là CentOS/RHEL.") echo "Hệ thống là CentOS/RHEL.";;
-        "Hệ thống không được hỗ trợ. Không thể cài Snap tự động.") echo "Hệ thống không được hỗ trợ. Không thể cài Snap tự động.";;
-        "Snap đã được cài đặt thành công.") echo "Snap đã được cài đặt thành công.";;
-        "Cài đặt Multipass...") echo "Cài đặt Multipass...";;
-        "Multipass đã được cài đặt.") echo "Multipass đã được cài đặt.";;
-        "Kiểm tra Multipass...") echo "Kiểm tra Multipass...";;
-        "Multipass đã sẵn sàng.") echo "Multipass đã sẵn sàng.";;
-        "Vui lòng nhập Titan Agent key: ") echo "Vui lòng nhập Titan Agent key: ";;
-        "Bạn chưa nhập key. Script dừng.") echo "Bạn chưa nhập key. Script dừng.";;
-        "Key không hợp lệ. Script dừng.") echo "Key không hợp lệ. Script dừng.";;
-         "Tải và giải nén Titan Agent...") echo "Tải và giải nén Titan Agent...";;
-        "Titan Agent đã được tải và giải nén.") echo "Titan Agent đã được tải và giải nén.";;
-        "Tạo file service systemd...") echo "Tạo file service systemd...";;
-        "Kích hoạt service systemd...") echo "Kích hoạt service systemd...";;
-        "Khởi động service systemd...") echo "Khởi động service systemd...";;
-        "Kiểm tra trạng thái service systemd...") echo "Kiểm tra trạng thái service systemd...";;
-        "Titan Agent đã được cài đặt và khởi động dưới dạng service systemd.") echo "Titan Agent đã được cài đặt và khởi động dưới dạng service systemd.";;
-        "Quá trình cài đặt và chạy Titan Agent hoàn tất.") echo "Quá trình cài đặt và chạy Titan Agent hoàn tất.";;
-         *) echo "$text";;
+        "Script này cần được chạy với quyền root.") translated_text="Script này cần được chạy với quyền root.";;
+        "Lệnh '$1' thất bại.") translated_text="Lệnh '$1' thất bại.";;
+        "Kiểm tra Snap...") translated_text="Kiểm tra Snap...";;
+        "Snap đã được cài đặt.") translated_text="Snap đã được cài đặt.";;
+        "Snap chưa được cài đặt, tiến hành cài đặt...") translated_text="Snap chưa được cài đặt, tiến hành cài đặt...";;
+        "Hệ thống là Debian/Ubuntu.") translated_text="Hệ thống là Debian/Ubuntu.";;
+        "Hệ thống là Fedora.") translated_text="Hệ thống là Fedora.";;
+        "Hệ thống là CentOS/RHEL.") translated_text="Hệ thống là CentOS/RHEL.";;
+        "Hệ thống không được hỗ trợ. Không thể cài Snap tự động.") translated_text="Hệ thống không được hỗ trợ. Không thể cài Snap tự động.";;
+        "Snap đã được cài đặt thành công.") translated_text="Snap đã được cài đặt thành công.";;
+        "Cài đặt Multipass...") translated_text="Cài đặt Multipass...";;
+        "Multipass đã được cài đặt.") translated_text="Multipass đã được cài đặt.";;
+        "Kiểm tra Multipass...") translated_text="Kiểm tra Multipass...";;
+        "Multipass đã sẵn sàng.") translated_text="Multipass đã sẵn sàng.";;
+        "Vui lòng nhập Titan Agent key: ") translated_text="Vui lòng nhập Titan Agent key: ";;
+        "Bạn chưa nhập key. Script dừng.") translated_text="Bạn chưa nhập key. Script dừng.";;
+        "Key không hợp lệ. Script dừng.") translated_text="Key không hợp lệ. Script dừng.";;
+         "Tải và giải nén Titan Agent...") translated_text="Tải và giải nén Titan Agent...";;
+        "Titan Agent đã được tải và giải nén.") translated_text="Titan Agent đã được tải và giải nén.";;
+        "Tạo file service systemd...") translated_text="Tạo file service systemd...";;
+        "Kích hoạt service systemd...") translated_text="Kích hoạt service systemd...";;
+        "Khởi động service systemd...") translated_text="Khởi động service systemd...";;
+        "Kiểm tra trạng thái service systemd...") translated_text="Kiểm tra trạng thái service systemd...";;
+        "Titan Agent đã được cài đặt và khởi động dưới dạng service systemd.") translated_text="Titan Agent đã được cài đặt và khởi động dưới dạng service systemd.";;
+        "Quá trình cài đặt và chạy Titan Agent hoàn tất.") translated_text="Quá trình cài đặt và chạy Titan Agent hoàn tất.";;
+         *) translated_text="$text";;
       esac
       ;;
     "en")
       case "$text" in
-        "Script này cần được chạy với quyền root.") echo "This script needs to be run with root privileges.";;
-        "Lệnh '$1' thất bại.") echo "Command '$1' failed.";;
-        "Kiểm tra Snap...") echo "Checking Snap...";;
-        "Snap đã được cài đặt.") echo "Snap is already installed.";;
-        "Snap chưa được cài đặt, tiến hành cài đặt...") echo "Snap is not installed, proceeding with installation...";;
-        "Hệ thống là Debian/Ubuntu.") echo "System is Debian/Ubuntu.";;
-        "Hệ thống là Fedora.") echo "System is Fedora.";;
-        "Hệ thống là CentOS/RHEL.") echo "System is CentOS/RHEL.";;
-       "Hệ thống không được hỗ trợ. Không thể cài Snap tự động.") echo "System is not supported. Cannot install Snap automatically.";;
-        "Snap đã được cài đặt thành công.") echo "Snap has been installed successfully.";;
-        "Cài đặt Multipass...") echo "Installing Multipass...";;
-        "Multipass đã được cài đặt.") echo "Multipass has been installed.";;
-        "Kiểm tra Multipass...") echo "Checking Multipass...";;
-        "Multipass đã sẵn sàng.") echo "Multipass is ready.";;
-         "Vui lòng nhập Titan Agent key: ") echo "Please enter Titan Agent key: ";;
-        "Bạn chưa nhập key. Script dừng.") echo "You have not entered a key. Script stopped.";;
-        "Key không hợp lệ. Script dừng.") echo "Invalid key. Script stopped.";;
-         "Tải và giải nén Titan Agent...") echo "Downloading and extracting Titan Agent...";;
-        "Titan Agent đã được tải và giải nén.") echo "Titan Agent has been downloaded and extracted.";;
-        "Tạo file service systemd...") echo "Creating systemd service file...";;
-        "Kích hoạt service systemd...") echo "Enabling systemd service...";;
-        "Khởi động service systemd...") echo "Starting systemd service...";;
-        "Kiểm tra trạng thái service systemd...") echo "Checking systemd service status...";;
-        "Titan Agent đã được cài đặt và khởi động dưới dạng service systemd.") echo "Titan Agent has been installed and started as a systemd service.";;
-        "Quá trình cài đặt và chạy Titan Agent hoàn tất.") echo "Installation and running of Titan Agent completed.";;
-         *) echo "$text";;
+        "Script này cần được chạy với quyền root.") translated_text="This script needs to be run with root privileges.";;
+        "Lệnh '$1' thất bại.") translated_text="Command '$1' failed.";;
+        "Kiểm tra Snap...") translated_text="Checking Snap...";;
+        "Snap đã được cài đặt.") translated_text="Snap is already installed.";;
+        "Snap chưa được cài đặt, tiến hành cài đặt...") translated_text="Snap is not installed, proceeding with installation...";;
+        "Hệ thống là Debian/Ubuntu.") translated_text="System is Debian/Ubuntu.";;
+        "Hệ thống là Fedora.") translated_text="System is Fedora.";;
+        "Hệ thống là CentOS/RHEL.") translated_text="System is CentOS/RHEL.";;
+       "Hệ thống không được hỗ trợ. Không thể cài Snap tự động.") translated_text="System is not supported. Cannot install Snap automatically.";;
+        "Snap đã được cài đặt thành công.") translated_text="Snap has been installed successfully.";;
+        "Cài đặt Multipass...") translated_text="Installing Multipass...";;
+        "Multipass đã được cài đặt.") translated_text="Multipass has been installed.";;
+        "Kiểm tra Multipass...") translated_text="Checking Multipass...";;
+        "Multipass đã sẵn sàng.") translated_text="Multipass is ready.";;
+         "Vui lòng nhập Titan Agent key: ") translated_text="Please enter Titan Agent key: ";;
+        "Bạn chưa nhập key. Script dừng.") translated_text="You have not entered a key. Script stopped.";;
+        "Key không hợp lệ. Script dừng.") translated_text="Invalid key. Script stopped.";;
+         "Tải và giải nén Titan Agent...") translated_text="Downloading and extracting Titan Agent...";;
+        "Titan Agent đã được tải và giải nén.") translated_text="Titan Agent has been downloaded and extracted.";;
+        "Tạo file service systemd...") translated_text="Creating systemd service file...";;
+        "Kích hoạt service systemd...") translated_text="Enabling systemd service...";;
+        "Khởi động service systemd...") translated_text="Starting systemd service...";;
+        "Kiểm tra trạng thái service systemd...") translated_text="Checking systemd service status...";;
+        "Titan Agent đã được cài đặt và khởi động dưới dạng service systemd.") translated_text="Titan Agent has been installed and started as a systemd service.";;
+        "Quá trình cài đặt và chạy Titan Agent hoàn tất.") translated_text="Installation and running of Titan Agent completed.";;
+         *) translated_text="$text";;
       esac
       ;;
     "id")
       case "$text" in
-        "Script này cần được chạy với quyền root.") echo "Skrip ini harus dijalankan dengan hak akses root.";;
-        "Lệnh '$1' thất bại.") echo "Perintah '$1' gagal.";;
-        "Kiểm tra Snap...") echo "Memeriksa Snap...";;
-        "Snap đã được cài đặt.") echo "Snap sudah terpasang.";;
-        "Snap chưa được cài đặt, tiến hành cài đặt...") echo "Snap belum terpasang, mulai pemasangan...";;
-        "Hệ thống là Debian/Ubuntu.") echo "Sistem adalah Debian/Ubuntu.";;
-        "Hệ thống là Fedora.") echo "Sistem adalah Fedora.";;
-        "Hệ thống là CentOS/RHEL.") echo "Sistem adalah CentOS/RHEL.";;
-        "Hệ thống không được hỗ trợ. Không thể cài Snap tự động.") echo "Sistem tidak didukung. Tidak dapat memasang Snap secara otomatis.";;
-        "Snap đã được cài đặt thành công.") echo "Snap berhasil terpasang.";;
-        "Cài đặt Multipass...") echo "Memasang Multipass...";;
-        "Multipass đã được cài đặt.") echo "Multipass berhasil terpasang.";;
-        "Kiểm tra Multipass...") echo "Memeriksa Multipass...";;
-        "Multipass đã sẵn sàng.") echo "Multipass siap digunakan.";;
-        "Vui lòng nhập Titan Agent key: ") echo "Silakan masukkan key Titan Agent: ";;
-        "Bạn chưa nhập key. Script dừng.") echo "Anda belum memasukkan key. Skrip berhenti.";;
-        "Key không hợp lệ. Script dừng.") echo "Key tidak valid. Skrip berhenti.";;
-        "Tải và giải nén Titan Agent...") echo "Mengunduh dan mengekstrak Titan Agent...";;
-        "Titan Agent đã được tải và giải nén.") echo "Titan Agent berhasil diunduh dan diekstrak.";;
-        "Tạo file service systemd...") echo "Membuat file service systemd...";;
-        "Kích hoạt service systemd...") echo "Mengaktifkan service systemd...";;
-        "Khởi động service systemd...") echo "Memulai service systemd...";;
-        "Kiểm tra trạng thái service systemd...") echo "Memeriksa status service systemd...";;
-       "Titan Agent telah terpasang dan berjalan sebagai service systemd.") echo "Titan Agent telah terpasang dan berjalan sebagai service systemd.";;
-        "Quá trình cài đặt và chạy Titan Agent hoàn tất.") echo "Proses instalasi dan menjalankan Titan Agent selesai.";;
-         *) echo "$text";;
+        "Script này cần được chạy với quyền root.") translated_text="Skrip ini harus dijalankan dengan hak akses root.";;
+        "Lệnh '$1' thất bại.") translated_text="Perintah '$1' gagal.";;
+        "Kiểm tra Snap...") translated_text="Memeriksa Snap...";;
+        "Snap đã được cài đặt.") translated_text="Snap sudah terpasang.";;
+        "Snap belum terpasang, mulai pemasangan...") translated_text="Snap belum terpasang, mulai pemasangan...";;
+        "Hệ thống là Debian/Ubuntu.") translated_text="Sistem adalah Debian/Ubuntu.";;
+        "Hệ thống là Fedora.") translated_text="Sistem adalah Fedora.";;
+        "Hệ thống là CentOS/RHEL.") translated_text="Sistem adalah CentOS/RHEL.";;
+        "Hệ thống không được hỗ trợ. Không thể cài Snap tự động.") translated_text="Sistem tidak didukung. Tidak dapat memasang Snap secara otomatis.";;
+        "Snap đã được cài đặt thành công.") translated_text="Snap berhasil terpasang.";;
+        "Cài đặt Multipass...") translated_text="Memasang Multipass...";;
+        "Multipass đã được cài đặt.") translated_text="Multipass berhasil terpasang.";;
+        "Kiểm tra Multipass...") translated_text="Memeriksa Multipass...";;
+        "Multipass siap digunakan.") translated_text="Multipass siap digunakan.";;
+        "Vui lòng nhập Titan Agent key: ") translated_text="Silakan masukkan key Titan Agent: ";;
+        "Bạn chưa nhập key. Script dừng.") translated_text="Anda belum memasukkan key. Skrip berhenti.";;
+        "Key không hợp lệ. Script dừng.") translated_text="Key tidak valid. Skrip berhenti.";;
+        "Tải và giải nén Titan Agent...") translated_text="Mengunduh dan mengekstrak Titan Agent...";;
+        "Titan Agent đã được tải và giải nén.") translated_text="Titan Agent berhasil diunduh dan diekstrak.";;
+        "Tạo file service systemd...") translated_text="Membuat file service systemd...";;
+        "Kích hoạt service systemd...") translated_text="Mengaktifkan service systemd...";;
+        "Khởi động service systemd...") translated_text="Memulai service systemd...";;
+        "Memeriksa status service systemd...") translated_text="Memeriksa status service systemd...";;
+       "Titan Agent telah terpasang dan berjalan sebagai service systemd.") translated_text="Titan Agent telah terpasang dan berjalan sebagai service systemd.";;
+        "Quá trình cài đặt và chạy Titan Agent hoàn tất.") translated_text="Proses instalasi dan menjalankan Titan Agent selesai.";;
+         *) translated_text="$text";;
       esac
       ;;
     "ru")
       case "$text" in
-        "Script này cần được chạy với quyền root.") echo "Этот скрипт должен быть запущен с правами root.";;
-        "Lệnh '$1' thất bại.") echo "Команда '$1' не удалась.";;
-       "Kiểm tra Snap...") echo "Проверка Snap...";;
-        "Snap đã được cài đặt.") echo "Snap уже установлен.";;
-        "Snap не установлен, начинаю установку...") echo "Snap не установлен, начинаю установку...";;
-        "Система Debian/Ubuntu.") echo "Система Debian/Ubuntu.";;
-         "Система Fedora.") echo "Система Fedora.";;
-        "Система CentOS/RHEL.") echo "Система CentOS/RHEL.";;
-        "Система не поддерживается. Невозможно установить Snap автоматически.") echo "Система не поддерживается. Невозможно установить Snap автоматически.";;
-        "Snap успешно установлен.") echo "Snap успешно установлен.";;
-        "Установка Multipass...") echo "Установка Multipass...";;
-        "Multipass установлен.") echo "Multipass установлен.";;
-        "Проверка Multipass...") echo "Проверка Multipass...";;
-        "Multipass готов к использованию.") echo "Multipass готов к использованию.";;
-         "Пожалуйста, введите ключ Titan Agent: ") echo "Пожалуйста, введите ключ Titan Agent: ";;
-        "Вы не ввели ключ. Скрипт остановлен.") echo "Вы не ввели ключ. Скрипт остановлен.";;
-       "Неверный ключ. Скрипт остановлен.") echo "Неверный ключ. Скрипт остановлен.";;
-        "Загрузка и распаковка Titan Agent...") echo "Загрузка и распаковка Titan Agent...";;
-        "Titan Agent был загружен и распакован.") echo "Titan Agent был загружен и распакован.";;
-        "Создание файла службы systemd...") echo "Создание файла службы systemd...";;
-        "Активация службы systemd...") echo "Активация службы systemd...";;
-        "Запуск службы systemd...") echo "Запуск службы systemd...";;
-        "Проверка статуса службы systemd...") echo "Проверка статуса службы systemd...";;
-        "Titan Agent установлен и запущен как служба systemd.") echo "Titan Agent установлен и запущен как служба systemd.";;
-        "Установка и запуск Titan Agent завершены.") echo "Установка и запуск Titan Agent завершены.";;
-        *) echo "$text";;
+        "Script này cần được chạy với quyền root.") translated_text="Этот скрипт должен быть запущен с правами root.";;
+        "Lệnh '$1' thất bại.") translated_text="Команда '$1' не удалась.";;
+       "Kiểm tra Snap...") translated_text="Проверка Snap...";;
+        "Snap đã được cài đặt.") translated_text="Snap уже установлен.";;
+        "Snap не установлен, начинаю установку...") translated_text="Snap не установлен, начинаю установку...";;
+        "Система Debian/Ubuntu.") translated_text="Система Debian/Ubuntu.";;
+         "Система Fedora.") translated_text="Система Fedora.";;
+        "Система CentOS/RHEL.") translated_text="Система CentOS/RHEL.";;
+        "Система не поддерживается. Невозможно установить Snap автоматически.") translated_text="Система не поддерживается. Невозможно установить Snap автоматически.";;
+        "Snap успешно установлен.") translated_text="Snap успешно установлен.";;
+        "Установка Multipass...") translated_text="Установка Multipass...";;
+        "Multipass установлен.") translated_text="Multipass установлен.";;
+        "Проверка Multipass...") translated_text="Проверка Multipass...";;
+        "Multipass готов к использованию.") translated_text="Multipass готов к использованию.";;
+         "Пожалуйста, введите ключ Titan Agent: ") translated_text="Пожалуйста, введите ключ Titan Agent: ";;
+        "Вы не ввели ключ. Скрипт остановлен.") translated_text="Вы не ввели ключ. Скрипт остановлен.";;
+       "Неверный ключ. Скрипт остановлен.") translated_text="Неверный ключ. Скрипт остановлен.";;
+        "Загрузка и распаковка Titan Agent...") translated_text="Загрузка и распаковка Titan Agent...";;
+        "Titan Agent был загружен и распакован.") translated_text="Titan Agent был загружен и распакован.";;
+        "Создание файла службы systemd...") translated_text="Создание файла службы systemd...";;
+        "Активация службы systemd...") translated_text="Активация службы systemd...";;
+        "Запуск службы systemd...") translated_text="Запуск службы systemd...";;
+        "Проверка статуса службы systemd...") translated_text="Проверка статуса службы systemd...";;
+        "Titan Agent установлен и запущен как служба systemd.") translated_text="Titan Agent установлен и запущен как служба systemd.";;
+        "Установка и запуск Titan Agent завершены.") translated_text="Установка и запуск Titan Agent завершены.";;
+        *) translated_text="$text";;
       esac
       ;;
     *)
-      echo "$text"
+      translated_text="$text"
       ;;
   esac
+  echo "$translated_text"
 }
+
 
 # Set default language to English
 LANGUAGE="en"
