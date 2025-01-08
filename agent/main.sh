@@ -36,37 +36,37 @@ translate() {
       ;;
     "en")
       case "$text" in
-        "Script này cần được chạy với quyền root.") echo "$(translate "Script này cần được chạy với quyền root.")";;
-        "Lệnh '$1' thất bại.") echo "$(translate "Lệnh '$1' thất bại.")";;
-        "Kiểm tra Snap...") echo "$(translate "Kiểm tra Snap...")";;
-        "Snap đã được cài đặt.") echo "$(translate "Snap đã được cài đặt.")";;
-        "Snap chưa được cài đặt, tiến hành cài đặt...") echo "$(translate "Snap chưa được cài đặt, tiến hành cài đặt...")";;
-        "Hệ thống là Debian/Ubuntu.") echo "$(translate "Hệ thống là Debian/Ubuntu.")";;
-        "Hệ thống là Fedora.") echo "$(translate "Hệ thống là Fedora.")";;
-        "Hệ thống là CentOS/RHEL.") echo "$(translate "Hệ thống là CentOS/RHEL.")";;
-       "Hệ thống không được hỗ trợ. Không thể cài Snap tự động.") echo "$(translate "Hệ thống không được hỗ trợ. Không thể cài Snap tự động.")";;
-        "Snap đã được cài đặt thành công.") echo "$(translate "Snap đã được cài đặt thành công.")";;
-        "Cài đặt Multipass...") echo "$(translate "Cài đặt Multipass...")";;
-        "Multipass đã được cài đặt.") echo "$(translate "Multipass đã được cài đặt.")";;
-        "Kiểm tra Multipass...") echo "$(translate "Kiểm tra Multipass...")";;
-        "Multipass đã sẵn sàng.") echo "$(translate "Multipass đã sẵn sàng.")";;
-         "Vui lòng nhập Titan Agent key: ") echo "$(translate "Vui lòng nhập Titan Agent key: ")"
-        "Bạn chưa nhập key. Script dừng.") echo "$(translate "Bạn chưa nhập key. Script dừng.")";;
-        "Key không hợp lệ. Script dừng.") echo "$(translate "Key không hợp lệ. Script dừng.")";;
-         "Tải và giải nén Titan Agent...") echo "$(translate "Tải và giải nén Titan Agent...")";;
-        "Titan Agent đã được tải và giải nén.") echo "$(translate "Titan Agent đã được tải và giải nén.")";;
-        "Tạo file service systemd...") echo "$(translate "Tạo file service systemd...")";;
-        "Kích hoạt service systemd...") echo "$(translate "Kích hoạt service systemd...")";;
-        "Khởi động service systemd...") echo "$(translate "Khởi động service systemd...")";;
-        "Kiểm tra trạng thái service systemd...") echo "$(translate "Kiểm tra trạng thái service systemd...")";;
-        "Titan Agent đã được cài đặt và khởi động dưới dạng service systemd.") echo "$(translate "Titan Agent đã được cài đặt và khởi động dưới dạng service systemd.")";;
-        "Quá trình cài đặt và chạy Titan Agent hoàn tất.") echo "$(translate "Quá trình cài đặt và chạy Titan Agent hoàn tất.")";;
+        "Script này cần được chạy với quyền root.") echo "$(translate "This script needs to be run with root privileges.")";;
+        "Lệnh '$1' thất bại.") echo "$(translate "Command '$1' failed.")";;
+        "Kiểm tra Snap...") echo "$(translate "Checking Snap...")";;
+        "Snap đã được cài đặt.") echo "$(translate "Snap is already installed.")";;
+        "Snap chưa được cài đặt, tiến hành cài đặt...") echo "$(translate "Snap is not installed, proceeding with installation...")";;
+        "Hệ thống là Debian/Ubuntu.") echo "$(translate "System is Debian/Ubuntu.")";;
+        "Hệ thống là Fedora.") echo "$(translate "System is Fedora.")";;
+        "Hệ thống là CentOS/RHEL.") echo "$(translate "System is CentOS/RHEL.")";;
+       "Hệ thống không được hỗ trợ. Không thể cài Snap tự động.") echo "$(translate "System is not supported. Cannot install Snap automatically.")";;
+        "Snap đã được cài đặt thành công.") echo "$(translate "Snap has been installed successfully.")";;
+        "Cài đặt Multipass...") echo "$(translate "Installing Multipass...")";;
+        "Multipass đã được cài đặt.") echo "$(translate "Multipass has been installed.")";;
+        "Kiểm tra Multipass...") echo "$(translate "Checking Multipass...")";;
+        "Multipass đã sẵn sàng.") echo "$(translate "Multipass is ready.")";;
+         "Vui lòng nhập Titan Agent key: ") echo "$(translate "Please enter Titan Agent key: ")"
+        "Bạn chưa nhập key. Script dừng.") echo "$(translate "You have not entered a key. Script stopped.")";;
+        "Key không hợp lệ. Script dừng.") echo "$(translate "Invalid key. Script stopped.")";;
+         "Tải và giải nén Titan Agent...") echo "$(translate "Downloading and extracting Titan Agent...")";;
+        "Titan Agent đã được tải và giải nén.") echo "$(translate "Titan Agent has been downloaded and extracted.")";;
+        "Tạo file service systemd...") echo "$(translate "Creating systemd service file...")";;
+        "Kích hoạt service systemd...") echo "$(translate "Enabling systemd service...")";;
+        "Khởi động service systemd...") echo "$(translate "Starting systemd service...")";;
+        "Kiểm tra trạng thái service systemd...") echo "$(translate "Checking systemd service status...")";;
+        "Titan Agent đã được cài đặt và khởi động dưới dạng service systemd.") echo "$(translate "Titan Agent has been installed and started as a systemd service.")";;
+        "Quá trình cài đặt và chạy Titan Agent hoàn tất.") echo "$(translate "Installation and running of Titan Agent completed.")";;
          *) echo "$text";;
       esac
       ;;
     "id")
       case "$text" in
-       "Script ini harus dijalankan dengan hak akses root.") echo "$(translate "Script ini harus dijalankan dengan hak akses root.")";;
+        "Script ini harus dijalankan dengan hak akses root.") echo "$(translate "Script ini harus dijalankan dengan hak akses root.")";;
         "Perintah '$1' gagal.") echo "$(translate "Perintah '$1' gagal.")";;
         "Memeriksa Snap...") echo "$(translate "Memeriksa Snap...")";;
         "Snap sudah terpasang.") echo "$(translate "Snap sudah terpasang.")";;
