@@ -20,7 +20,7 @@ translate() {
         "Multipass đã được cài đặt.") echo "$(translate "Multipass đã được cài đặt.")";;
         "Kiểm tra Multipass...") echo "$(translate "Kiểm tra Multipass...")";;
         "Multipass đã sẵn sàng.") echo "$(translate "Multipass đã sẵn sàng.")";;
-        "Vui lòng nhập Titan Agent key: ") echo "$(translate "Vui lòng nhập Titan Agent key: ")"
+        "Vui lòng nhập Titan Agent key: ") echo "$(translate "Vui lòng nhập Titan Agent key: ")";;
         "Bạn chưa nhập key. Script dừng.") echo "$(translate "Bạn chưa nhập key. Script dừng.")";;
         "Key không hợp lệ. Script dừng.") echo "$(translate "Key không hợp lệ. Script dừng.")";;
          "Tải và giải nén Titan Agent...") echo "$(translate "Tải và giải nén Titan Agent...")";;
@@ -50,7 +50,7 @@ translate() {
         "Multipass đã được cài đặt.") echo "$(translate "Multipass has been installed.")";;
         "Kiểm tra Multipass...") echo "$(translate "Checking Multipass...")";;
         "Multipass đã sẵn sàng.") echo "$(translate "Multipass is ready.")";;
-         "Vui lòng nhập Titan Agent key: ") echo "$(translate "Please enter Titan Agent key: ")"
+         "Vui lòng nhập Titan Agent key: ") echo "$(translate "Please enter Titan Agent key: ")";;
         "Bạn chưa nhập key. Script dừng.") echo "$(translate "You have not entered a key. Script stopped.")";;
         "Key không hợp lệ. Script dừng.") echo "$(translate "Invalid key. Script stopped.")";;
          "Tải và giải nén Titan Agent...") echo "$(translate "Downloading and extracting Titan Agent...")";;
@@ -80,7 +80,7 @@ translate() {
         "Multipass berhasil terpasang.") echo "$(translate "Multipass berhasil terpasang.")";;
         "Memeriksa Multipass...") echo "$(translate "Memeriksa Multipass...")";;
         "Multipass siap digunakan.") echo "$(translate "Multipass siap digunakan.")";;
-        "Silakan masukkan key Titan Agent: ") echo "$(translate "Silakan masukkan key Titan Agent: ")"
+        "Silakan masukkan key Titan Agent: ") echo "$(translate "Silakan masukkan key Titan Agent: ")";;
         "Anda belum memasukkan key. Skrip berhenti.") echo "$(translate "Anda belum memasukkan key. Skrip berhenti.")";;
         "Key tidak valid. Skrip berhenti.") echo "$(translate "Key tidak valid. Skrip berhenti.")";;
         "Mengunduh dan mengekstrak Titan Agent...") echo "$(translate "Mengunduh dan mengekstrak Titan Agent...")";;
@@ -110,7 +110,7 @@ translate() {
         "Multipass установлен.") echo "$(translate "Multipass установлен.")";;
         "Проверка Multipass...") echo "$(translate "Проверка Multipass...")";;
         "Multipass готов к использованию.") echo "$(translate "Multipass готов к использованию.")";;
-         "Пожалуйста, введите ключ Titan Agent: ") echo "$(translate "Пожалуйста, введите ключ Titan Agent: ")"
+         "Пожалуйста, введите ключ Titan Agent: ") echo "$(translate "Пожалуйста, введите ключ Titan Agent: ")";;
         "Вы не ввели ключ. Скрипт остановлен.") echo "$(translate "Вы не ввели ключ. Скрипт остановлен.")";;
        "Неверный ключ. Скрипт остановлен.") echo "$(translate "Неверный ключ. Скрипт остановлен.")";;
         "Загрузка и распаковка Titan Agent...") echo "$(translate "Загрузка и распаковка Titan Agent...")";;
@@ -121,7 +121,7 @@ translate() {
         "Проверка статуса службы systemd...") echo "$(translate "Проверка статуса службы systemd...")";;
         "Titan Agent установлен и запущен как служба systemd.") echo "$(translate "Titan Agent установлен и запущен как служба systemd.")";;
         "Установка и запуск Titan Agent завершены.") echo "$(translate "Установка и запуск Titan Agent завершены.")";;
-        *) echo "$text";;
+        *) echo "$text" ;;
       esac
       ;;
     *)
