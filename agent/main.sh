@@ -22,10 +22,10 @@ translate() {
         "Multipass has been installed.") translated_text="Multipass đã được cài đặt.";;
         "Checking Multipass...") translated_text="Kiểm tra Multipass...";;
         "Multipass is ready.") translated_text="Multipass đã sẵn sàng.";;
-         "Please enter Titan Agent key: ") translated_text="Vui lòng nhập Titan Agent key: ";;
+        "Please enter Titan Agent key: ") translated_text="Vui lòng nhập Titan Agent key: ";;
         "You have not entered a key. Script stopped.") translated_text="Bạn chưa nhập key. Script dừng.";;
         "Invalid key. Script stopped.") translated_text="Key không hợp lệ. Script dừng.";;
-        "Downloading and extracting Titan Agent...") translated_text="Tải và giải nén Titan Agent...";;
+         "Downloading and extracting Titan Agent...") translated_text="Tải và giải nén Titan Agent...";;
         "Titan Agent has been downloaded and extracted.") translated_text="Titan Agent đã được tải và giải nén.";;
         "Creating systemd service file...") translated_text="Tạo file service systemd...";;
         "Enabling systemd service...") translated_text="Kích hoạt service systemd...";;
@@ -33,7 +33,7 @@ translate() {
         "Checking systemd service status...") translated_text="Kiểm tra trạng thái service systemd...";;
         "Titan Agent has been installed and started as a systemd service.") translated_text="Titan Agent đã được cài đặt và khởi động dưới dạng service systemd.";;
         "Installation and running of Titan Agent completed.") translated_text="Quá trình cài đặt và chạy Titan Agent hoàn tất.";;
-         *) translated_text="$text";;
+        *) translated_text="$text";;
       esac
       ;;
     "en")
@@ -52,7 +52,7 @@ translate() {
         "Multipass has been installed.") translated_text="Multipass has been installed.";;
         "Checking Multipass...") translated_text="Checking Multipass...";;
         "Multipass is ready.") translated_text="Multipass is ready.";;
-        "Please enter Titan Agent key: ") translated_text="Please enter Titan Agent key: ";;
+         "Please enter Titan Agent key: ") translated_text="Please enter Titan Agent key: ";;
         "You have not entered a key. Script stopped.") translated_text="You have not entered a key. Script stopped.";;
         "Invalid key. Script stopped.") translated_text="Invalid key. Script stopped.";;
          "Downloading and extracting Titan Agent...") translated_text="Downloading and extracting Titan Agent...";;
@@ -60,7 +60,7 @@ translate() {
         "Creating systemd service file...") translated_text="Creating systemd service file...";;
         "Enabling systemd service...") translated_text="Enabling systemd service...";;
         "Starting systemd service...") translated_text="Starting systemd service...";;
-        "Checking systemd service status...") translated_text="Checking systemd service status...";;
+         "Checking systemd service status...") translated_text="Checking systemd service status...";;
         "Titan Agent has been installed and started as a systemd service.") translated_text="Titan Agent has been installed and started as a systemd service.";;
         "Installation and running of Titan Agent completed.") translated_text="Installation and running of Titan Agent completed.";;
          *) translated_text="$text";;
@@ -100,27 +100,27 @@ translate() {
       case "$text" in
         "This script needs to be run with root privileges.") translated_text="Этот скрипт должен быть запущен с правами root.";;
         "Command '$1' failed.") translated_text="Команда '$1' не удалась.";;
-        "Checking Snap...") translated_text="Проверка Snap...";;
+         "Checking Snap...") translated_text="Проверка Snap...";;
         "Snap is already installed.") translated_text="Snap уже установлен.";;
         "Snap is not installed, proceeding with installation...") translated_text="Snap не установлен, начинаю установку...";;
         "System is Debian/Ubuntu.") translated_text="Система Debian/Ubuntu.";;
          "System is Fedora.") translated_text="Система Fedora.";;
         "System is CentOS/RHEL.") translated_text="Система CentOS/RHEL.";;
-        "System is not supported. Cannot install Snap automatically.") translated_text="Система не поддерживается. Невозможно установить Snap автоматически.";;
+         "System is not supported. Cannot install Snap automatically.") translated_text="Система не поддерживается. Невозможно установить Snap автоматически.";;
         "Snap has been installed successfully.") translated_text="Snap успешно установлен.";;
         "Installing Multipass...") translated_text="Установка Multipass...";;
-        "Multipass has been installed.") translated_text="Multipass установлен.";;
+         "Multipass has been installed.") translated_text="Multipass установлен.";;
         "Checking Multipass...") translated_text="Проверка Multipass...";;
         "Multipass is ready.") translated_text="Multipass готов к использованию.";;
-         "Please enter Titan Agent key: ") translated_text="Пожалуйста, введите ключ Titan Agent: ";;
+        "Please enter Titan Agent key: ") translated_text="Пожалуйста, введите ключ Titan Agent: ";;
         "You have not entered a key. Script stopped.") translated_text="Вы не ввели ключ. Скрипт остановлен.";;
        "Invalid key. Script stopped.") translated_text="Неверный ключ. Скрипт остановлен.";;
-        "Downloading and extracting Titan Agent...") translated_text="Загрузка и распаковка Titan Agent...";;
+         "Downloading and extracting Titan Agent...") translated_text="Загрузка и распаковка Titan Agent...";;
         "Titan Agent has been downloaded and extracted.") translated_text="Titan Agent был загружен и распакован.";;
          "Creating systemd service file...") translated_text="Создание файла службы systemd...";;
         "Enabling systemd service...") translated_text="Активация службы systemd...";;
          "Starting systemd service...") translated_text="Запуск службы systemd...";;
-        "Checking systemd service status...") translated_text="Проверка статуса службы systemd...";;
+         "Checking systemd service status...") translated_text="Проверка статуса службы systemd...";;
         "Titan Agent has been installed and started as a systemd service.") translated_text="Titan Agent установлен и запущен как служба systemd.";;
         "Installation and running of Titan Agent completed.") translated_text="Установка и запуск Titan Agent завершены.";;
          *) translated_text="$text";;
