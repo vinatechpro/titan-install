@@ -142,14 +142,23 @@ else
     check_command "apt update"
     apt install -y snapd
     check_command "apt install -y snapd"
+    # Cài đặt unzip
+    apt install -y unzip
+    check_command "apt install -y unzip"
   elif command -v dnf &> /dev/null; then
     translate "Hệ thống là Fedora."
     dnf install -y snapd
     check_command "dnf install -y snapd"
+    # Cài đặt unzip
+    dnf install -y unzip
+    check_command "dnf install -y unzip"
   elif command -v yum &> /dev/null; then
      translate "Hệ thống là CentOS/RHEL."
     yum install -y snapd
     check_command "yum install -y snapd"
+    # Cài đặt unzip
+    yum install -y unzip
+    check_command "yum install -y unzip"
   else
       translate "Hệ thống không được hỗ trợ. Không thể cài Snap tự động."
       exit 1
