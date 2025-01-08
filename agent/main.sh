@@ -136,35 +136,44 @@ LANGUAGE="en"
 # Danh sách các ngôn ngữ được hỗ trợ
 declare -a SUPPORTED_LANGUAGES=("en" "vi" "id" "ru")
 
-# Lấy tham số ngôn ngữ từ dòng lệnh
-while [[ $# -gt 0 ]]; do
-  case "$1" in
-    --ver=*)
-      LANGUAGE="${1#--ver=}"
-      # Kiểm tra xem ngôn ngữ có được hỗ trợ không
-      is_supported=false
-      for lang in "${SUPPORTED_LANGUAGES[@]}"; do
-        if [[ "$lang" == "$LANGUAGE" ]]; then
-          is_supported=true
-          break
+# Hàm để phân tích các đối số dòng lệnh
+parse_arguments() {
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --ver=*)
+        LANGUAGE="${1#--ver=}"
+        # Kiểm tra xem ngôn ngữ có được hỗ trợ không
+        is_supported=false
+        for lang in "${SUPPORTED_LANGUAGES[@]}"; do
+          if [[ "$lang" == "$LANGUAGE" ]]; then
+            is_supported=true
+            break
+          fi
+        done
+        if ! $is_supported; then
+          echo "Ngôn ngữ '$LANGUAGE' không được hỗ trợ. Sử dụng ngôn ngữ mặc định (tiếng Anh)."
+          LANGUAGE="en" # Đặt lại ngôn ngữ về mặc định nếu không hợp lệ
         fi
-      done
-      if ! $is_supported; then
-        echo "Ngôn ngữ '$LANGUAGE' không được hỗ trợ. Sử dụng ngôn ngữ mặc định (tiếng Anh)."
-        LANGUAGE="en" # Đặt lại ngôn ngữ về mặc định nếu không hợp lệ
-      fi
-      shift
-      ;;
-       --key=*)
-      KEY_ARG="$1"
-      KEY=$(echo "$KEY_ARG" | sed 's/--key=//g')
-      shift
-       ;;
-    *)
-      break
-      ;;
-  esac
-done
+        shift
+        ;;
+      --key=*)
+        KEY_ARG="$1"
+        KEY=$(echo "$KEY_ARG" | sed 's/--key=//g')
+        shift
+        ;;
+      *)
+        echo "Tham số không hợp lệ: $1"
+        echo "Sử dụng: ./main.sh [--ver=<language>] [--key=<key>]"
+        exit 1
+        ;;
+    esac
+  done
+}
+
+
+# Gọi hàm phân tích tham số
+parse_arguments "$@"
+
 
 # Kiểm tra xem user có phải là root hay không
 if [[ $EUID -ne 0 ]]; then
