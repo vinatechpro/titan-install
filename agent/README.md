@@ -30,6 +30,8 @@ curl -O https://raw.githubusercontent.com/vinatechpro/titan-install/refs/heads/m
 *   **English:** `--ver=en`
 *   **Russian:** `--ver=ru`
 *   **Indonesian:** `--ver=id`
+*   **Chinese:** `--ver=zh`
+*   **Turkey:** `--ver=tr`
 
 
 
