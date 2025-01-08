@@ -124,6 +124,66 @@ translate() {
              *) echo "$text";;
         esac
         ;;
+    "zh")
+      case "$text" in
+        "Script này cần được chạy với quyền root.") echo "此脚本必须以 root 权限运行。";;
+        "Lệnh '$1' thất bại.") echo "命令 '$1' 失败。";;
+        "Kiểm tra Snap...") echo "正在检查 Snap...";;
+        "Snap đã được cài đặt.") echo "Snap 已安装。";;
+        "Snap chưa được cài đặt, tiến hành cài đặt...") echo "Snap 未安装，正在进行安装...";;
+        "Hệ thống là Debian/Ubuntu.") echo "系统为 Debian/Ubuntu。";;
+        "Hệ thống là Fedora.") echo "系统为 Fedora。";;
+        "Hệ thống là CentOS/RHEL.") echo "系统为 CentOS/RHEL。";;
+        "Hệ thống không được hỗ trợ. Không thể cài Snap tự động.") echo "系统不受支持。无法自动安装 Snap。";;
+        "Snap đã được cài đặt thành công.") echo "Snap 已成功安装。";;
+        "Cài đặt Multipass...") echo "正在安装 Multipass...";;
+        "Multipass đã được cài đặt.") echo "Multipass 已安装。";;
+        "Kiểm tra Multipass...") echo "正在检查 Multipass...";;
+        "Multipass đã sẵn sàng.") echo "Multipass 已准备就绪。";;
+         "Vui lòng nhập Titan Agent key: ") echo "请输 Titan Agent 密钥：";;
+        "Bạn chưa nhập key. Script dừng.") echo "您尚未输入密钥。脚本已停止。";;
+        "Key không hợp lệ. Script dừng.") echo "密钥无效。脚本已停止。";;
+        "Tải và giải nén Titan Agent...") echo "正在下载并解压 Titan Agent...";;
+        "Titan Agent đã được tải và giải nén.") echo "Titan Agent 已下载并解压。";;
+        "Tạo file service systemd...") echo "正在创建 systemd 服务文件...";;
+        "Kích hoạt service systemd...") echo "正在启用 systemd 服务...";;
+        "Khởi động service systemd...") echo "正在启动 systemd 服务...";;
+        "Kiểm tra trạng thái service systemd...") echo "正在检查 systemd 服务状态...";;
+        "Titan Agent đã được cài đặt và khởi động dưới dạng service systemd.") echo "Titan Agent 已安装并以 systemd 服务形式启动。";;
+        "Quá trình cài đặt và chạy Titan Agent hoàn tất.") echo "Titan Agent 的安装和运行过程已完成。";;
+         *) echo "$text";;
+      esac
+      ;;
+    "tr")
+      case "$text" in
+        "Script này cần được chạy với quyền root.") echo "Bu komut dosyası root ayrıcalıklarıyla çalıştırılmalıdır.";;
+        "Lệnh '$1' thất bại.") echo "'$1' komutu başarısız oldu.";;
+        "Kiểm tra Snap...") echo "Snap kontrol ediliyor...";;
+        "Snap đã được cài đặt.") echo "Snap zaten yüklü.";;
+        "Snap chưa được cài đặt, tiến hành cài đặt...") echo "Snap yüklü değil, kuruluma devam ediliyor...";;
+        "Hệ thống là Debian/Ubuntu.") echo "Sistem Debian/Ubuntu.";;
+         "Hệ thống là Fedora.") echo "Sistem Fedora.";;
+        "Hệ thống là CentOS/RHEL.") echo "Sistem CentOS/RHEL.";;
+        "Hệ thống không được hỗ trợ. Không thể cài Snap tự động.") echo "Sistem desteklenmiyor. Snap otomatik olarak kurulamıyor.";;
+        "Snap đã được cài đặt thành công.") echo "Snap başarıyla kuruldu.";;
+        "Cài đặt Multipass...") echo "Multipass kuruluyor...";;
+        "Multipass đã được cài đặt.") echo "Multipass kuruldu.";;
+        "Kiểm tra Multipass...") echo "Multipass kontrol ediliyor...";;
+        "Multipass đã sẵn sàng.") echo "Multipass hazır.";;
+        "Vui lòng nhập Titan Agent key: ") echo "Lütfen Titan Agent anahtarını girin: ";;
+        "Bạn chưa nhập key. Script dừng.") echo "Anahtarı girmediniz. Komut dosyası durduruldu.";;
+        "Key không hợp lệ. Script dừng.") echo "Geçersiz anahtar. Komut dosyası durduruldu.";;
+        "Tải và giải nén Titan Agent...") echo "Titan Agent indiriliyor ve çıkarılıyor...";;
+        "Titan Agent đã được tải và giải nén.") echo "Titan Agent indirildi ve çıkarıldı.";;
+        "Tạo file service systemd...") echo "systemd hizmet dosyası oluşturuluyor...";;
+        "Kích hoạt service systemd...") echo "systemd hizmeti etkinleştiriliyor...";;
+        "Khởi động service systemd...") echo "systemd hizmeti başlatılıyor...";;
+        "Kiểm tra trạng thái service systemd...") echo "systemd hizmet durumu kontrol ediliyor...";;
+        "Titan Agent đã được cài đặt và khởi động dưới dạng service systemd.") echo "Titan Agent kuruldu ve systemd hizmeti olarak başlatıldı.";;
+        "Quá trình cài đặt và chạy Titan Agent hoàn tất.") echo "Titan Agent kurulumu ve çalıştırma işlemi tamamlandı.";;
+         *) echo "$text";;
+      esac
+      ;;
     *)
         echo "$text"
       ;;
@@ -134,7 +194,7 @@ translate() {
 LANGUAGE="en"
 
 # Danh sách các ngôn ngữ được hỗ trợ
-declare -a SUPPORTED_LANGUAGES=("en" "vi" "id" "ru")
+declare -a SUPPORTED_LANGUAGES=("en" "vi" "id" "ru" "zh" "tr")
 
 # Hàm để phân tích các đối số dòng lệnh
 parse_arguments() {
