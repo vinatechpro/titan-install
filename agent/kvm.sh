@@ -78,9 +78,11 @@ if [[ "$KVM_INSTALLED" == "false" ]] || [[ "$NESTED_STATUS" == "disabled" ]]; th
   modprobe "$KVM_MODULE" nested=1 > /dev/null 2>&1
 
   if [ $? -eq 0 ]; then
-     echo "options $KVM_MODULE nested=1" | tee /etc/modprobe.d/kvm.conf > /dev/null
+     echo "options $KVM_MODULE nested=1" | sudo tee /etc/modprobe.d/kvm.conf > /dev/null
 
-     if [[ $(cat "$NESTED_FILE") == "Y" ]]; then
+     NESTED_ENABLED=$(cat "$NESTED_FILE") # Read nested value after modprobe
+
+     if [[ "$NESTED_ENABLED" == "Y" ]]; then
         echo "${GREEN} ${CHECKMARK} Successfully enabled nested virtualization. Please reboot for changes to take effect.${NC}"
      else
         echo "${RED} ${CROSSMARK} Failed to enable nested virtualization. Please check manually.${NC}"
