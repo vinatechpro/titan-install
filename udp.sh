@@ -1,19 +1,26 @@
 #!/bin/bash
 
-Các giá trị UDP buffer mong muốn
+# Giá trị mới cho UDP buffer size
+BUFFER_SIZE_MAX=8388608
+BUFFER_SIZE_DEFAULT=1048576
 
-RMEM_MAX=2500000 WMEM_MAX=2500000 RMEM_DEFAULT=2500000 WMEM_DEFAULT=2500000
+# Cập nhật giá trị trong sysctl
+echo "Cấu hình UDP buffer size..."
+sudo sysctl -w net.core.rmem_max=$BUFFER_SIZE_MAX
+sudo sysctl -w net.core.wmem_max=$BUFFER_SIZE_MAX
+sudo sysctl -w net.core.rmem_default=$BUFFER_SIZE_DEFAULT
+sudo sysctl -w net.core.wmem_default=$BUFFER_SIZE_DEFAULT
 
-Thêm hoặc cập nhật các giá trị trong /etc/sysctl.conf
+# Ghi vào sysctl.conf để duy trì sau reboot
+echo "Lưu cấu hình vào /etc/sysctl.conf..."
+sudo tee -a /etc/sysctl.conf > /dev/null <<EOF
+net.core.rmem_max=$BUFFER_SIZE_MAX
+net.core.wmem_max=$BUFFER_SIZE_MAX
+net.core.rmem_default=$BUFFER_SIZE_DEFAULT
+net.core.wmem_default=$BUFFER_SIZE_DEFAULT
+EOF
 
-grep -q "net.core.rmem_max" /etc/sysctl.conf && sudo sed -i "s/net.core.rmem_max./net.core.rmem_max=$RMEM_MAX/" /etc/sysctl.conf || echo "net.core.rmem_max=$RMEM_MAX" | sudo tee -a /etc/sysctl.conf grep -q "net.core.wmem_max" /etc/sysctl.conf && sudo sed -i "s/net.core.wmem_max./net.core.wmem_max=$WMEM_MAX/" /etc/sysctl.conf || echo "net.core.wmem_max=$WMEM_MAX" | sudo tee -a /etc/sysctl.conf grep -q "net.core.rmem_default" /etc/sysctl.conf && sudo sed -i "s/net.core.rmem_default./net.core.rmem_default=$RMEM_DEFAULT/" /etc/sysctl.conf || echo "net.core.rmem_default=$RMEM_DEFAULT" | sudo tee -a /etc/sysctl.conf grep -q "net.core.wmem_default" /etc/sysctl.conf && sudo sed -i "s/net.core.wmem_default./net.core.wmem_default=$WMEM_DEFAULT/" /etc/sysctl.conf || echo "net.core.wmem_default=$WMEM_DEFAULT" | sudo tee -a /etc/sysctl.conf
-
-Áp dụng thay đổi ngay lập tức
-
+# Áp dụng thay đổi
 sudo sysctl -p
 
-Kiểm tra lại giá trị
-
-sysctl net.core.rmem_max sysctl net.core.wmem_max sysctl net.core.rmem_default sysctl net.core.wmem_default
-
-echo "Cấu hình UDP buffer đã được cập nhật thành công."
+echo "Hoàn tất! Kiểm tra lại bằng: sysctl -a | grep net.core"
