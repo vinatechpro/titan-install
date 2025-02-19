@@ -354,7 +354,7 @@ After=network.target
 
 [Service]
 WorkingDirectory=/root/titanagent
-ExecStart=/usr/local/bin/agent --working-dir=/root/titanagent --server-url=https://test4-api.titannet.io --channel=vps --key="$KEY"
+ExecStart=/usr/local/bin/agent --working-dir=/root/titanagent --server-url=https://test4-api.titannet.io --key="$KEY"
 Restart=on-failure
 User=$USER
 Group=$USER
