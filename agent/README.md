@@ -4,7 +4,7 @@
 
 | CPU     | Memory | Storage Space | Upstream Bandwidth | NAT          |
 |---------|--------|---------------|--------------------|--------------|
-| CPU 2v  | RAM 2G | SSD 50G+      | 10Mbps+             | TCP1,2,3 UDP1,2,3 |
+| CPU 2v  | RAM 2G | SSD 50G+      | 10Mbps+             | Public, NAT1 |
 
 **Recommended:**
 
