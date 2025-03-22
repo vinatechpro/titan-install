@@ -1,27 +1,97 @@
-# Bash Shell Auto Install Titan Node L2 - Cassini Testnet on Ubuntu 22.04
+# Bash Shell Auto Install Titan Edge on Linux
 
-- Main Menu - L2 Edge (version v0.1.20)
+## Requirements
+- Linux OS
+- Root access (`sudo`)
+- Internet
+
+## Get Identity Code
+- Log in to [Titan Network](https://titannet.gitbook.io/titan-network-en/resource-network-test/bind-the-identity-code), copy your **Identity Code** (e.g., `36284E4F-5CBE-4D95-994B-90E53D90CA2C`).
+
+## Install Nodes
+```bash
+curl -s https://raw.githubusercontent.com/vinatechpro/titan-install/refs/heads/main/edge.sh | sudo bash -s -- <hash_value> [node_count]
 ```
-curl -O https://raw.githubusercontent.com/vinatechpro/titan-install/main/main.sh && chmod u+x main.sh && ./main.sh
+- Example (5 nodes): `curl -s https://raw.githubusercontent.com/vinatechpro/titan-install/refs/heads/main/edge.sh | sudo bash -s -- 36284E4F-5CBE-4D95-994B-90E53D90CA2C`
+
+## Remove Nodes
+```bash
+curl -s https://raw.githubusercontent.com/vinatechpro/titan-install/refs/heads/main/edge.sh | sudo bash -s -- rm
 ```
 
-- Just For Install (version v0.1.20)
+## Check Nodes
+- List: `docker ps -a`
+- Logs: `docker logs titan-edge-0<number>`
+
+## Notes
+- `<hash_value>` required
+- `[node_count]`: 1-5 (default 5)
+- Needs 50GB/node
+
+---
+
+# Автоматическая установка Titan Edge на Linux с помощью Bash Shell (Russian)
+
+## Требования
+- ОС Linux
+- Доступ root (`sudo`)
+- Интернет
+
+## Получить Identity Code
+- Войдите в [Titan Network](https://titannet.gitbook.io/titan-network-en/resource-network-test/bind-the-identity-code), скопируйте ваш **Identity Code** (например, `36284E4F-5CBE-4D95-994B-90E53D90CA2C`).
+
+## Установить узлы
+```bash
+curl -s https://raw.githubusercontent.com/vinatechpro/titan-install/refs/heads/main/edge.sh | sudo bash -s -- <hash_value> [node_count]
 ```
-curl -O https://raw.githubusercontent.com/vinatechpro/titan-install/main/install.sh && chmod u+x install.sh && ./install.sh
+- Пример (5 узлов): `curl -s https://raw.githubusercontent.com/vinatechpro/titan-install/refs/heads/main/edge.sh | sudo bash -s -- 36284E4F-5CBE-4D95-994B-90E53D90CA2C`
+
+## Удалить узлы
+```bash
+curl -s https://raw.githubusercontent.com/vinatechpro/titan-install/refs/heads/main/edge.sh | sudo bash -s -- rm
 ```
-- Just For Update (version v0.1.20)
+
+## Проверить узлы
+- Список: `docker ps -a`
+- Логи: `docker logs titan-edge-0<number>`
+
+## Примечания
+- `<hash_value>` обязателен
+- `[node_count]`: 1-5 (по умолчанию 5)
+- Требуется 50 ГБ/узел
+
+---
+
+# Bash Shell Cài Đặt Tự Động Titan Edge trên Linux (Vietnamese)
+
+## Yêu cầu
+- Hệ điều hành Linux
+- Quyền root (`sudo`)
+- Internet
+
+## Lấy Identity Code
+- Đăng nhập [Titan Network](https://titannet.gitbook.io/titan-network-en/resource-network-test/bind-the-identity-code), sao chép **Identity Code** (ví dụ: `36284E4F-5CBE-4D95-994B-90E53D90CA2C`).
+
+## Cài đặt node
+```bash
+curl -s https://raw.githubusercontent.com/vinatechpro/titan-install/refs/heads/main/edge.sh | sudo bash -s -- <hash_value> [node_count]
 ```
-curl -O https://raw.githubusercontent.com/vinatechpro/titan-install/main/update.sh && chmod u+x update.sh && ./update.sh
+- Ví dụ (5 node): `curl -s https://raw.githubusercontent.com/vinatechpro/titan-install/refs/heads/main/edge.sh | sudo bash -s -- 36284E4F-5CBE-4D95-994B-90E53D90CA2C`
+
+## Xóa node
+```bash
+curl -s https://raw.githubusercontent.com/vinatechpro/titan-install/refs/heads/main/edge.sh | sudo bash -s -- rm
 ```
-- Show Info & Config node
-```
-titan-edge config show && titan-edge info
-```
-- If errors, delete folder `.titanedge` and reinstall
-```
-systemctl stop titand.service && rm -rf /root/.titanedge && rm -rf /usr/local/titan
-```
-------------
-- Ref Titan Dashboard: https://test1.titannet.io/intiveRegister?code=CtKlIe
-- Telegram Offical: https://t.me/titannet_dao
-- Hidden Gems Community (HGC): https://t.me/HGCdotGG
+
+## Kiểm tra node
+- Danh sách: `docker ps -a`
+- Log: `docker logs titan-edge-0<number>`
+
+## Ghi chú
+- `<hash_value>` bắt buộc
+- `[node_count]`: 1-5 (mặc định 5)
+- Cần 50GB/node
+
+--- 
+
+Rất ngắn gọn và dễ hiểu cho cả 3 ngôn ngữ!
