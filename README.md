@@ -3,7 +3,6 @@
 ## Requirements
 - Linux OS (Recommended Ubuntu 22.04)
 - Root access (`sudo`)
-- Internet
 
 ## Get Identity Code
 - Log in to [Titan Network](https://titannet.gitbook.io/titan-network-en/resource-network-test/bind-the-identity-code), copy your **Identity Code** (e.g., `36284E4F-5CBE-4D95-994B-90E53D90CA2C`).
@@ -35,7 +34,6 @@ curl -s https://raw.githubusercontent.com/vinatechpro/titan-install/refs/heads/m
 ## Требования
 - ОС Linux (Рекомендуется Ubuntu 22.04)
 - Доступ root (`sudo`)
-- Интернет
 
 ## Получить Identity Code
 - Войдите в [Titan Network](https://titannet.gitbook.io/titan-network-en/resource-network-test/bind-the-identity-code), скопируйте ваш **Identity Code** (например, `36284E4F-5CBE-4D95-994B-90E53D90CA2C`).
@@ -67,7 +65,6 @@ curl -s https://raw.githubusercontent.com/vinatechpro/titan-install/refs/heads/m
 ## Yêu cầu
 - Hệ điều hành Linux (Khuyến nghị Ubuntu 22.04)
 - Quyền root (`sudo`)
-- Internet
 
 ## Lấy Identity Code
 - Đăng nhập [Titan Network](https://titannet.gitbook.io/titan-network-en/resource-network-test/bind-the-identity-code), sao chép **Identity Code** (ví dụ: `36284E4F-5CBE-4D95-994B-90E53D90CA2C`).
