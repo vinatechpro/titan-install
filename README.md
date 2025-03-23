@@ -91,7 +91,3 @@ curl -s https://raw.githubusercontent.com/vinatechpro/titan-install/refs/heads/m
 - `<hash_value>` bắt buộc
 - `[node_count]`: 1-5 (mặc định 5)
 - Cần 50GB/node
-
---- 
-
-Rất ngắn gọn và dễ hiểu cho cả 3 ngôn ngữ!
