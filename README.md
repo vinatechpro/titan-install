@@ -1,7 +1,7 @@
 # Bash Shell Auto Install Titan Edge on Linux
 
 ## Requirements
-- Linux OS
+- Linux OS (Recommended Ubuntu 22.04)
 - Root access (`sudo`)
 - Internet
 
@@ -33,7 +33,7 @@ curl -s https://raw.githubusercontent.com/vinatechpro/titan-install/refs/heads/m
 # Автоматическая установка Titan Edge на Linux с помощью Bash Shell (Russian)
 
 ## Требования
-- ОС Linux
+- ОС Linux (Рекомендуется Ubuntu 22.04)
 - Доступ root (`sudo`)
 - Интернет
 
@@ -65,7 +65,7 @@ curl -s https://raw.githubusercontent.com/vinatechpro/titan-install/refs/heads/m
 # Bash Shell Cài Đặt Tự Động Titan Edge trên Linux (Vietnamese)
 
 ## Yêu cầu
-- Hệ điều hành Linux
+- Hệ điều hành Linux (Khuyến nghị Ubuntu 22.04)
 - Quyền root (`sudo`)
 - Internet
 
