@@ -127,7 +127,7 @@ if ! [[ "$node_count" =~ ^[1-5]$ ]]; then
 fi
 
 # Configuration
-IMAGE_NAME="nezha123/titan-edge"
+IMAGE_NAME="laodauhgc/titan-edge"
 STORAGE_GB=50
 START_PORT=1235
 TOTAL_NODES=$node_count  # Renamed for clarity
@@ -298,7 +298,6 @@ while [[ $created_count -lt $nodes_to_create && $next_node -le 5 ]]; do
 
     # Ensure storage path exists with proper permissions
     mkdir -p "$STORAGE_PATH/.titanedge"
-    chmod -R 777 "$STORAGE_PATH/.titanedge"
     if [[ $? -ne 0 ]]; then
         echo -e "${RED}Failed to create storage path for container ${CONTAINER_NAME}.${NC}"
         exit 1
