@@ -26,7 +26,6 @@ curl -s https://raw.githubusercontent.com/vinatechpro/titan-install/refs/heads/m
 - `<hash_value>` required
 - `[node_count]`: 1-5 (default 5)
 - Needs 50GB/node
-## [How to Deploy Titan PCDN - Galileo Testnet](https://github.com/laodauhgc/bash-scripts/blob/main/titan-network/how-to-install-titan-pcdn-en.md)
 
 # Автоматическая установка Titan Edge на Linux с помощью Bash Shell (Russian)
 
